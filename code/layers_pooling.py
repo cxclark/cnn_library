@@ -132,3 +132,6 @@ class PoolLayer:
         assert(dA_prev.shape == A_prev.shape)
 
         return dA_prev
+
+    def getParamsandGrads(self):
+        return []
