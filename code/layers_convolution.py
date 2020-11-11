@@ -11,18 +11,16 @@ class Convolution:
                 }
         self.cache = {}
         self.type = 'conv'
-
+        self.grads = {}
 
     def conv_single_step(self, a_slice_prev, W, b):
         """
         Apply one filter on a single slice of the output activation
         of the previous layer.
-
         Arguments:
             a_slice_prev -- slice of input data of shape (f, f, n_C_prev)
             W -- weight parameters contained in a window, matrix of shape (f, f, n_C_prev)
             b -- bias parameters contained in a window, matrix of shape (1, 1, 1)
-
         Returns:
             Z -- a scaler value, result of convolving sliding window (W, b) on slice of input data.
         """
@@ -36,7 +34,6 @@ class Convolution:
     def zero_pad(self, X, pad):
         """
         Pad all images in dataset X with zeros along height and width.
-
         Arguments:
             X -- python numpy array of shape (m, n_H, n_W, n_C) representing a batch
                  of m images.
@@ -50,13 +47,11 @@ class Convolution:
     def forward(self, A_prev, W, b, params):
         """
         Implements forward propagation for a convolution.
-
         Arguments:
             A_prev -- output activations of the previosu layer, 
                       numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
             W -- weights, numpy array of shape (f, f, n_C_prev, n_C)
             b -- biases, numpy array of shape (1, 1, 1, n_C)
-
         Returns:
             Z -- convolution output, numpy array of shape (m, n_H, n_W, n_C)
         """
@@ -179,8 +174,8 @@ class Convolution:
 
                         # Use the corners to define the slice from a_prev_pad.
                         a_slice = a_prev_pad[vert_start:vert_end, horiz_start: horiz_end, :] += W[:,:,:,c] * dZ[i,h,w,c]
-                        dW[:,:,:,c] += a_slice * dZ[i,h,w,c]
-                        db[:,:,:,c] += dZ[i,h,w,c]
+                        self.grads['dW'][:,:,:,c] += a_slice * dZ[i,h,w,c]
+                        self.grads['db'][:,:,:,c] += dZ[i,h,w,c]
 
             # Set the ith training example's dA_prev to the updated da_prev_pad.
             dA_prev[i,:,:,:] = da_prev_pad[pad:-pad, pad:-pad, :]
@@ -188,12 +183,4 @@ class Convolution:
         # Check that your output shape is correct.
         assert(dA_prev.shape == (m, n_H_prev, n_W_prev, n_C_prev))
 
-        return dA_prev, dW, db
-
-
-
-
-
-
-
-
+        return dA_prev
