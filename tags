@@ -1,0 +1,31 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+Model	code/model.py	/^class Model:$/;"	c
+Model	first_code.py	/^class Model:$/;"	c
+SoftmaxLayer	code/layers_loss.py	/^class SoftmaxLayer:$/;"	c
+__init__	code/layers_loss.py	/^    def __init__(self):$/;"	m	class:SoftmaxLayer
+__init__	code/model.py	/^    def __init__(self, *model, **kwargs):$/;"	m	class:Model
+__init__	first_code.py	/^    def __init__(self, *model, **kwargs):$/;"	m	class:Model
+backward	code/layers_loss.py	/^    def backward(self, dA):$/;"	m	class:SoftmaxLayer
+evaluate	code/model.py	/^    def evaluate(self, data, labels):$/;"	m	class:Model
+evaluate	first_code.py	/^    def evaluate(self, data, labels):$/;"	m	class:Model
+forward	code/layers_loss.py	/^    def forward(self, Z,):$/;"	m	class:SoftmaxLayer
+getParamsAndGrads	code/layers_loss.py	/^    def getParamsAndGrads(self):$/;"	m	class:SoftmaxLayer
+get_batches	first_code.py	/^def get_batches(data, labels):$/;"	f
+np	code/layers_loss.py	/^import numpy as np$/;"	I
+np	code/model.py	/^import numpy as np$/;"	I
+np	first_code.py	/^import numpy as np$/;"	I
+predict	code/model.py	/^    def predict(self, data):$/;"	m	class:Model
+predict	first_code.py	/^    def predict(self, data):$/;"	m	class:Model
+set_batch_size	code/model.py	/^    def set_batch_size(self, batch_size):$/;"	m	class:Model
+set_batch_size	first_code.py	/^    def set_batch_size(self, batch_size):$/;"	m	class:Model
+set_loss	code/model.py	/^    def set_loss(self, loss):$/;"	m	class:Model
+set_loss	first_code.py	/^    def set_loss(self, loss):$/;"	m	class:Model
+train	code/model.py	/^    def train(self, data, labels, batch_size=128, epochs=50,$/;"	m	class:Model
+train	first_code.py	/^    def train(self, data, labels, batch_size=128, epochs=50,$/;"	m	class:Model
+uniform	first_code.py	/^def uniform(shape, scale=0.05):$/;"	f
