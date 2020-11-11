@@ -7,24 +7,30 @@
 !_TAG_PROGRAM_VERSION	0.0.0	//
 Convolution	code/layers_convolution.py	/^class Convolution:$/;"	c
 Model	code/model.py	/^class Model:$/;"	c
+PoolLayer	code/layers_pooling.py	/^class PoolLayer:$/;"	c
 ReluLayer	code/layers_activation.py	/^class ReluLayer:$/;"	c
 SoftmaxLayer	code/layers_loss.py	/^class SoftmaxLayer:$/;"	c
 __init__	code/layers_activation.py	/^    def __init__(self):$/;"	m	class:ReluLayer
 __init__	code/layers_convolution.py	/^    def __init__(self, filters, filter_size, padding, stride):$/;"	m	class:Convolution
 __init__	code/layers_loss.py	/^    def __init__(self):$/;"	m	class:SoftmaxLayer
+__init__	code/layers_pooling.py	/^    def __init__(self, filter_size=(3,3), stride=1, mode="max"):$/;"	m	class:PoolLayer
 __init__	code/model.py	/^    def __init__(self, *model, **kwargs):$/;"	m	class:Model
 backward	code/layers_activation.py	/^    def backward(self, dA):$/;"	m	class:ReluLayer
 backward	code/layers_convolution.py	/^    def backward(self, dZ):$/;"	m	class:Convolution
 backward	code/layers_loss.py	/^    def backward(self, dA):$/;"	m	class:SoftmaxLayer
+backward	code/layers_pooling.py	/^    def backward(self, dA):$/;"	m	class:PoolLayer
 conv_single_step	code/layers_convolution.py	/^    def conv_single_step(self, a_slice_prev, W, b):$/;"	m	class:Convolution
+create_mask_from_window	code/layers_pooling.py	/^    def create_mask_from_window(X):$/;"	m	class:PoolLayer
 evaluate	code/model.py	/^    def evaluate(self, data, labels):$/;"	m	class:Model
 forward	code/layers_activation.py	/^    def forward(self, Z):$/;"	m	class:ReluLayer
 forward	code/layers_convolution.py	/^    def forward(self, A_prev, W, b, params):$/;"	m	class:Convolution
 forward	code/layers_loss.py	/^    def forward(self, Z,):$/;"	m	class:SoftmaxLayer
+forward	code/layers_pooling.py	/^    def forward(self, A_prev):$/;"	m	class:PoolLayer
 getParamsAndGrads	code/layers_activation.py	/^    def getParamsAndGrads(self):$/;"	m	class:ReluLayer
 getParamsAndGrads	code/layers_loss.py	/^    def getParamsAndGrads(self):$/;"	m	class:SoftmaxLayer
 np	code/layers_convolution.py	/^import numpy as np$/;"	I
 np	code/layers_loss.py	/^import numpy as np$/;"	I
+np	code/layers_pooling.py	/^import numpy as np$/;"	I
 np	code/model.py	/^import numpy as np$/;"	I
 predict	code/model.py	/^    def predict(self, data):$/;"	m	class:Model
 set_batch_size	code/model.py	/^    def set_batch_size(self, batch_size):$/;"	m	class:Model
