@@ -30,32 +30,28 @@ class Convolution:
 
         return Z
 
-    # Define a helper function to zero pad.
     def zero_pad(self, X, pad):
         """
         Pad all images in dataset X with zeros along height and width.
         Arguments:
-            X -- python numpy array of shape (m, n_H, n_W, n_C) representing a batch
-                 of m images.
+            X -- python numpy array of shape (m, n_H, n_W, n_C) representing a batch of m images.
         Returns:
             X_pad -- padded image of shape (m, n_H + 2*pad, n_W + 2*pad, n_C)
         """
         X_pad = np.pad(X, ((0,0), (pad, pad), (pad, pad), (0, 0)), mode='constant', constant_values=(0,0))
         return X_pad
 
-    # Define a function to compute forward propagation. 
-    def forward(self, A_prev, W, b, params):
+    def forward(self, X, W, b, params):
         """
         Implements forward propagation for a convolution.
         Arguments:
-            A_prev -- output activations of the previosu layer, 
-                      numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
+            A_prev -- output activations of the previous layer, numpy array of 
+                      shape (m, n_H_prev, n_W_prev, n_C_prev)
             W -- weights, numpy array of shape (f, f, n_C_prev, n_C)
             b -- biases, numpy array of shape (1, 1, 1, n_C)
         Returns:
             Z -- convolution output, numpy array of shape (m, n_H, n_W, n_C)
         """
-
         # Extract dimensions from A_prev's shape.
         m, n_H_prev, n_W_prev, n_C_prev = A_prev.shape
 
@@ -112,11 +108,9 @@ class Convolution:
     def backward(self, dZ):
         """
         Implement the backward propagation for a convolution function.
-
         Arguments:
             dZ -- gradient of the cost with respect to the outout of conv layer (Z), 
                   numpy array of shape (m, n_H, n_W, n_C)
-
         Returns:
             dA_prev -- gradient of the cost with respect to the input of the conv layer (A_prev),
                        numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
@@ -125,7 +119,6 @@ class Convolution:
             db -- gradient of the cost with respect to the biases of the conv layer (b), 
                   numpy array of shape (1, 1, 1, n_C)
         """
-
         # Extract information from the cache.
         A_prev = self.cache['A_prev']
         W = self.cache['W']
@@ -184,3 +177,8 @@ class Convolution:
         assert(dA_prev.shape == (m, n_H_prev, n_W_prev, n_C_prev))
 
         return dA_prev
+
+    def update_params(self, lr):
+        self.W = self.W - lr * self.dW
+        self.b = self.b - lr * self.db
+
