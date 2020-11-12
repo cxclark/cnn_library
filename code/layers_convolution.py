@@ -1,9 +1,8 @@
 import numpy as np
 import utils
 
-# Define a class to complete convolutions.
-class Convolution:
-    def __init__(self, filters, filter_size, padding, stride):
+class ConvolutionLayer:
+    def __init__(self, filters=3, filter_size=3, padding=1, stride=1):
         self.params = {
                 'filters': filters,
                 'filter_size': filter_size,
@@ -116,7 +115,6 @@ class Convolution:
 
         return Z
 
-    # Define a function for the backward convolution pass.
     def backward(self, dZ):
         """
         Implement the backward propagation for a convolution function.
@@ -132,6 +130,8 @@ class Convolution:
                   numpy array of shape (1, 1, 1, n_C)
         """
         # Extract information from the cache.
+        # A_prev was the previous activation layer when doing forward propagation.
+        # W and b were the weights and biases used to calculate the output when doing forward propagation.
         A_prev = self.cache['A_prev']
         W = self.cache['W']
         b = self.cache['b']
@@ -139,12 +139,12 @@ class Convolution:
         # Extract dimensions from A_prev's shape.
         m, n_H_prev, n_W_prev, n_C_prev = A_prev.shape 
 
-        # Extract dimensions fro W's shape.
+        # Extract dimensions from W's shape.
         f, f, n_C_prev, n_C = W.shape
 
         # Extract hyperparameters.
-        stride = params['stride']
-        padding = params['padding']
+        stride = self.params['stride']
+        padding = self.params['padding']
 
         # Extract dimensions from dZ's shape.
         m, n_H, n_W, n_C = dZ.shape
@@ -155,8 +155,9 @@ class Convolution:
         db = np.zeros((1, 1, 1, n_C))
 
         # Pad A_prev and dA_prev.
+        # These are used as the inputs and outputs of backpropagation.
         A_prev_pad = zero_pad(A_prev, padding)
-        dZ_prev_pad = zero_pad(dA_prev, padding)
+        dA_prev_pad = zero_pad(dA_prev, padding)
 
         # Loop over the training examples.
         for i in range(m):
@@ -178,18 +179,30 @@ class Convolution:
                         horiz_end = horiz_start + f
 
                         # Use the corners to define the slice from a_prev_pad.
-                        a_slice = a_prev_pad[vert_start:vert_end, horiz_start: horiz_end, :] += W[:,:,:,c] * dZ[i,h,w,c]
-                        self.grads['dW'][:,:,:,c] += a_slice * dZ[i,h,w,c]
-                        self.grads['db'][:,:,:,c] += dZ[i,h,w,c]
+                        a_prev_slice = a_prev_pad[vert_start:vert_end, horiz_start: horiz_end, :]
+
+                        # Update gradients for the defined slice.
+                        da_prev_pad[vert_start:vert_end, horiz_start:horiz_end, :] += W[:,:,:,c] * dZ[i,h,w,c]
+                        dW[:,:,:,c] += a_prev_slice * dZ[i,h,w,c]
+                        db[:,:,:,c] += dZ[i,h,w,c]
 
             # Set the ith training example's dA_prev to the updated da_prev_pad.
-            dA_prev[i,:,:,:] = da_prev_pad[pad:-pad, pad:-pad, :]
+            dA_prev[i,:,:,:] = da_prev_pad[padding:-padding, padding:-padding, :]
 
         # Check that your output shape is correct.
         assert(dA_prev.shape == (m, n_H_prev, n_W_prev, n_C_prev))
 
+        # Store variables in the cache for access.
+        self.cache['dW'] = dW
+        self.cache['db'] = db
+
         return dA_prev
 
     def update_params(self, lr):
-        5.W = self.W - lr * self.dW
-        self.b = self.b - lr * self.db
+        W = self.cache['W']
+        b = self.cache['b']
+        dW = self.cache['dW']
+        db = self.cache['db']
+
+        self.cache['W'] = W - lr * dW
+        self.cache['b'] = b - lr * db
