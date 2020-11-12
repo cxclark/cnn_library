@@ -25,5 +25,5 @@ class SoftmaxLayer:
         Z = self.cache['Z']
         return dA * (Z * (1 - Z))
 
-    def getParamsAndGrads(self):
-        return []
+    def update_params(self):
+        pass
