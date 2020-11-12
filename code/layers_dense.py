@@ -29,7 +29,7 @@ class DenseLayer:
 
         return Z
 
-    def backward(self, dZ):
+    def backward(self, dZ, lr):
         batch_size = dZ.shape[1]
         self.cache['dW'] = np.dot(dZ, self.cache['A'].T) / batch_size
         self.cache['db'] = np.sum(dZ, axis=1, keepdims=True)

@@ -1,6 +1,5 @@
 import numpy as np
 
-# Define a class to perform Softmax 
 class SoftmaxLayer:
     """
     This is a classifier, with N discrete classes from 0 to N-1.
@@ -22,3 +21,11 @@ class SoftmaxLayer:
 
     def update_params(self):
         pass
+
+class CategoricalCrossEntropy:
+    def compute_loss(labels, predictions):
+        predictions = predictions / np.sum(predictions, axis=0, keepdims=True)
+        return -np.sum(labels * np.log(predictions))
+
+    def compute_derivative(labels, predictions):
+        return labels - predictions 

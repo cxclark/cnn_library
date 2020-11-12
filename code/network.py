@@ -1,31 +1,25 @@
 import numpy as np
 
-# Define a Model class to put together layers
-class Model:
+class Network:
     '''
-    Model manages a set of layers. 
+    Network manages a set of layers. 
     '''
-    def __init__(self, *model, **kwargs):
-        self.model = model
-        self.num_classes = 0
-        self.batch_size = 0
-        self.loss = None
-        self.optimizer = None
-    
-    # Define a function to set the batch size.
-    def set_batch_size(self, batch_size):
-        self.batch_size = batch_size
+    def __init__(self, layers = []):
+        self.layers = layers
 
-    # Define a function to set the loss.
     def set_loss(self, loss):
         self.loss = loss
 
-    # Define a function to to train the network.
-    def train(self, data, labels, batch_size=128, epochs=50,
-            optimizer='adam'):
+    def train(self, data, labels, learning_rate):
+        """
+        Trains the network.
+        """
+        A, cce, ce = self.evaluate(data, labels)
+        dA = A - Y
 
-        self.set_batch_size(batch_size)
-
+        for i in reversed(range(len(self.layers))):
+            dA = self.layers[i].backward(dA, learning_rate)
+        
         iter = 1
         for epoch in range(epochs):
             print('Running epoch:', epoch + 1)

@@ -7,6 +7,7 @@
 !_TAG_PROGRAM_VERSION	0.0.0	//
 Building a Convolutional Neural Network Using Only Numpy	.ipynb_checkpoints/README-checkpoint.md	/^# Building a Convolutional Neural Network Using Only Numpy$/;"	c
 Building a Convolutional Neural Network Using Only Numpy	README.md	/^# Building a Convolutional Neural Network Using Only Numpy$/;"	c
+CategoricalCrossEntropy	code/loss.py	/^class CategoricalCrossEntropy:$/;"	c
 Conclusions	.ipynb_checkpoints/README-checkpoint.md	/^## Conclusions$/;"	s
 Conclusions	README.md	/^## Conclusions$/;"	s
 Convolution	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^class Convolution:$/;"	c
@@ -19,6 +20,7 @@ Future Work	.ipynb_checkpoints/README-checkpoint.md	/^## Future Work$/;"	s
 Future Work	README.md	/^## Future Work$/;"	s
 InputLayer	code/layers_input.py	/^class InputLayer:$/;"	c
 Model	code/model.py	/^class Model:$/;"	c
+Network	code/network.py	/^class Network:$/;"	c
 PoolLayer	code/layers_pooling.py	/^class PoolLayer:$/;"	c
 Problem Statement	.ipynb_checkpoints/README-checkpoint.md	/^## Problem Statement$/;"	s
 Problem Statement	README.md	/^## Problem Statement$/;"	s
@@ -37,19 +39,23 @@ __init__	code/layers_input.py	/^    def __init__(self):$/;"	m	class:InputLayer
 __init__	code/layers_pooling.py	/^    def __init__(self, filter_size=2, stride=2, mode="max"):$/;"	m	class:PoolLayer
 __init__	code/loss.py	/^    def __init__(self):$/;"	m	class:SoftmaxLayer
 __init__	code/model.py	/^    def __init__(self, *model, **kwargs):$/;"	m	class:Model
+__init__	code/network.py	/^    def __init__(self, layers = []):$/;"	m	class:Network
 backward	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^    def backward(self, dA):$/;"	m	class:ReluLayer
 backward	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def backward(self, dZ):$/;"	m	class:Convolution
 backward	code/layers_activation.py	/^    def backward(self, dA):$/;"	m	class:ReluLayer
 backward	code/layers_convolution.py	/^    def backward(self, dZ):$/;"	m	class:ConvolutionLayer
-backward	code/layers_dense.py	/^    def backward(self, dZ):$/;"	m	class:DenseLayer
+backward	code/layers_dense.py	/^    def backward(self, dZ, lr):$/;"	m	class:DenseLayer
 backward	code/layers_flatten.py	/^    def backward(self, Z):$/;"	m	class:Flatten
 backward	code/layers_input.py	/^    def backward(self):$/;"	m	class:InputLayer
 backward	code/layers_pooling.py	/^    def backward(self, dA):$/;"	m	class:PoolLayer
 backward	code/loss.py	/^    def backward(self, dA):$/;"	m	class:SoftmaxLayer
+compute_derivative	code/loss.py	/^    def compute_derivative(labels, predictions):$/;"	m	class:CategoricalCrossEntropy
+compute_loss	code/loss.py	/^    def compute_loss(labels, predictions):$/;"	m	class:CategoricalCrossEntropy
 conv_single_step	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def conv_single_step(self, a_slice_prev, W, b):$/;"	m	class:Convolution
 conv_single_step	code/layers_convolution.py	/^    def conv_single_step(self, a_slice_prev, W, b):$/;"	m	class:ConvolutionLayer
 create_mask_from_window	code/layers_pooling.py	/^    def create_mask_from_window(X):$/;"	m	class:PoolLayer
 evaluate	code/model.py	/^    def evaluate(self, data, labels):$/;"	m	class:Model
+evaluate	code/network.py	/^    def evaluate(self, data, labels):$/;"	m	class:Network
 forward	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^    def forward(self, Z):$/;"	m	class:ReluLayer
 forward	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def forward(self, A_prev, W, b, params):$/;"	m	class:Convolution
 forward	code/layers_activation.py	/^    def forward(self, Z):$/;"	m	class:ReluLayer
@@ -71,11 +77,15 @@ np	code/layers_input.py	/^import numpy as np$/;"	I
 np	code/layers_pooling.py	/^import numpy as np$/;"	I
 np	code/loss.py	/^import numpy as np$/;"	I
 np	code/model.py	/^import numpy as np$/;"	I
+np	code/network.py	/^import numpy as np$/;"	I
 np	code/utils.py	/^import numpy as np$/;"	I
 predict	code/model.py	/^    def predict(self, data):$/;"	m	class:Model
+predict	code/network.py	/^    def predict(self, data):$/;"	m	class:Network
 set_batch_size	code/model.py	/^    def set_batch_size(self, batch_size):$/;"	m	class:Model
 set_loss	code/model.py	/^    def set_loss(self, loss):$/;"	m	class:Model
+set_loss	code/network.py	/^    def set_loss(self, loss):$/;"	m	class:Network
 train	code/model.py	/^    def train(self, data, labels, batch_size=128, epochs=50,$/;"	m	class:Model
+train	code/network.py	/^    def train(self, data, labels, learning_rate):$/;"	m	class:Network
 update_params	code/layers_activation.py	/^    def update_params(self):$/;"	m	class:ReluLayer
 update_params	code/layers_convolution.py	/^    def update_params(self, lr):$/;"	m	class:ConvolutionLayer
 update_params	code/layers_dense.py	/^    def update_params(self, lr):$/;"	m	class:DenseLayer
