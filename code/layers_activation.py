@@ -17,5 +17,5 @@ class ReluLayer:
         Z = self.cache['Z']
         return dA * np.where(Z < 0, 0, 1)
 
-    def getParamsAndGrads(self):
-        return []
+    def update_params(self):
+        pass
