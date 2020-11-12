@@ -9,11 +9,13 @@ class DenseLayer:
         self.units = units
         self.params = {}
         self.cache = {}
-        self.grads = {}
         self.type = 'fc'
 
     def forward(self, X):
-        if 'W' not in self.params:
+
+        # Initialize a parameter matrix if it does not exist. 
+        if 'W' not in self.cache:
+            W_shape = 
             self.params['W'], self.params['b'] = layer_init_uniform((X.shape[0], self-units))
         Z = np.dot(self.params['W'], X) + self.params['b']
         return Z

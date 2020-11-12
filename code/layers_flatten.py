@@ -1,10 +1,7 @@
 import numpy as np
 
-# Define a class to Flatten.
 class Flatten:
     def __init__(self):
-        self.shape = ()
-        self.transpose = True
         self.cache = {}
 
     def forward(self, Z):
@@ -15,7 +12,9 @@ class Flatten:
 
     def backward(self, Z):
         Z = Z.T
-        return Z.reshape(self.cache['shape'])
+        shape = self.cache['shape']
+        return Z.reshape(shape)
 
+    # Flatten layers have no parameters. 
     def update_params(self):
         pass 

@@ -55,6 +55,10 @@ class ConvolutionLayer:
         # Extract dimensions from A_prev's shape.
         m, n_H_prev, n_W_prev, n_C_prev = A_prev.shape
 
+        # Extract dimensions from the params dictionary.
+        filter_size = self.params['filter_size']
+        filters = self.params['filters']
+
         # Initialize a parameter matrix if it does not exist. 
         if 'W' not in self.cache:
             W_shape = (filter_size, filter_size, n_C_prev, filters)
