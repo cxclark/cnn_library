@@ -1,12 +1,11 @@
 import numpy as np
 
-# Define a class to complete max pooling.
 class PoolLayer:
     """
     Pooling layer. May add average later.
     Max pooling finds areas of max activation.
     """
-    def __init__(self, filter_size=(3,3), stride=1, mode="max"):
+    def __init__(self, filter_size=2, stride=2, mode="max"):
         self.params = {
                 'filter_size': filter_size,
                 'stride': stride,
@@ -15,12 +14,11 @@ class PoolLayer:
         self.type = 'pooling'
         self.cache = {}
 
-    # Define a function for forward propagation.
     def forward(self, A_prev):
         """
         Implements the forward pass of the pooling layer.
         Arguments:
-            A_prev -- Input data, numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
+            A_prev -- input data, numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
         Returns:
             A -- output of the pooling layer, numpy array of shape (m, n_H, n_W, n_C)
         """
@@ -71,14 +69,14 @@ class PoolLayer:
 
     def create_mask_from_window(X):
         """
-        Creates a mask from an input matrix X, to identify the max entry of X.
+        Creates a mask from an input matrix X, to identify the max entry of X. Used during backpropagation. 
         Arguments:
             X -- numpy array of shape (f, f)
         Returns:
             mask -- numpy array with same shape as window, contains True at position corresponding to max entry of X.
         """
         mask = X == np.max(X)
-        return mask 
+        return mask
 
     def backward(self, dA):
         """
@@ -88,10 +86,10 @@ class PoolLayer:
         Returns:
             dA_prev -- gradient of cost with respect to the input of the pooling layer, same shape as A_prev.
         """
-        # Extract information from the cache.
+        # Extract information.
         A_prev = self.cache['A_prev']
-        stride = self.cache['stride']
-        f = self.cache['filter_size']
+        stride = self.params['stride']
+        f = self.params['filter_size']
 
         # Extract dimensions from A_prev's shape and dA's shape.
         m, n_H_prev, n_W_prev, n_C_prev = A_prev.shape
@@ -133,5 +131,6 @@ class PoolLayer:
 
         return dA_prev
 
-    def getParamsandGrads(self):
-        return []
+    # Pooling layers don't have parameters.
+    def update_params(self):
+        pass

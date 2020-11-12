@@ -34,7 +34,7 @@ __init__	code/layers_convolution.py	/^    def __init__(self, filters=3, filter_s
 __init__	code/layers_dense.py	/^    def __init__(self, units=100):$/;"	m	class:DenseLayer
 __init__	code/layers_flatten.py	/^    def __init__(self):$/;"	m	class:Flatten
 __init__	code/layers_input.py	/^    def __init__(self):$/;"	m	class:InputLayer
-__init__	code/layers_pooling.py	/^    def __init__(self, filter_size=(3,3), stride=1, mode="max"):$/;"	m	class:PoolLayer
+__init__	code/layers_pooling.py	/^    def __init__(self, filter_size=2, stride=2, mode="max"):$/;"	m	class:PoolLayer
 __init__	code/loss.py	/^    def __init__(self):$/;"	m	class:SoftmaxLayer
 __init__	code/model.py	/^    def __init__(self, *model, **kwargs):$/;"	m	class:Model
 backward	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^    def backward(self, dA):$/;"	m	class:ReluLayer
@@ -52,7 +52,7 @@ create_mask_from_window	code/layers_pooling.py	/^    def create_mask_from_window
 evaluate	code/model.py	/^    def evaluate(self, data, labels):$/;"	m	class:Model
 forward	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^    def forward(self, Z):$/;"	m	class:ReluLayer
 forward	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def forward(self, A_prev, W, b, params):$/;"	m	class:Convolution
-forward	code/layers_activation.py	/^    def forward(self, Z, save_cache=False):$/;"	m	class:ReluLayer
+forward	code/layers_activation.py	/^    def forward(self, Z):$/;"	m	class:ReluLayer
 forward	code/layers_convolution.py	/^    def forward(self, A_prev):$/;"	m	class:ConvolutionLayer
 forward	code/layers_dense.py	/^    def forward(self, X):$/;"	m	class:DenseLayer
 forward	code/layers_flatten.py	/^    def forward(self, Z):$/;"	m	class:Flatten
@@ -60,7 +60,6 @@ forward	code/layers_input.py	/^    def forward(self, X):$/;"	m	class:InputLayer
 forward	code/layers_pooling.py	/^    def forward(self, A_prev):$/;"	m	class:PoolLayer
 forward	code/loss.py	/^    def forward(self, Z,):$/;"	m	class:SoftmaxLayer
 getParamsAndGrads	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^    def getParamsAndGrads(self):$/;"	m	class:ReluLayer
-getParamsandGrads	code/layers_pooling.py	/^    def getParamsandGrads(self):$/;"	m	class:PoolLayer
 layer_init_uniform	code/utils.py	/^def layer_init_uniform(x):$/;"	f
 normal	code/utils.py	/^def normal(shape, scale=0.05):$/;"	f
 np	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^import numpy as np$/;"	I
@@ -82,6 +81,7 @@ update_params	code/layers_convolution.py	/^    def update_params(self, lr):$/;"	
 update_params	code/layers_dense.py	/^    def update_params(self, lr):$/;"	m	class:DenseLayer
 update_params	code/layers_flatten.py	/^    def update_params(self):$/;"	m	class:Flatten
 update_params	code/layers_input.py	/^    def update_params(self):$/;"	m	class:InputLayer
+update_params	code/layers_pooling.py	/^    def update_params(self):$/;"	m	class:PoolLayer
 update_params	code/loss.py	/^    def update_params(self):$/;"	m	class:SoftmaxLayer
 zero_pad	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def zero_pad(self, X, pad):$/;"	m	class:Convolution
 zero_pad	code/layers_convolution.py	/^    def zero_pad(self, X, pad):$/;"	m	class:ConvolutionLayer
