@@ -1,4 +1,5 @@
 import numpy as np
+import utils
 
 # Define a class to complete convolutions.
 class Convolution:
@@ -11,12 +12,25 @@ class Convolution:
                 }
         self.cache = {}
         self.type = 'conv'
-        self.grads = {}
+
+    def zero_pad(self, X, pad):
+        """
+        Pad all images in dataset X with zeros along height and width.
+        Arguments:
+            X -- python numpy array of shape (m, n_H, n_W, n_C) representing a batch of m images.
+            pad -- zero-padding size to append to height and width.
+        Returns:
+            X_pad -- padded image of shape (m, n_H + 2*pad, n_W + 2*pad, n_C)
+        """
+        # Extract the padding value from the parameter dictionary.
+        pad = self.params['padding']
+        # Pad the images in dataset X.
+        X_pad = np.pad(X, ((0,0), (pad, pad), (pad, pad), (0, 0)), mode='constant', constant_values=(0,0))
+        return X_pad
 
     def conv_single_step(self, a_slice_prev, W, b):
         """
-        Apply one filter on a single slice of the output activation
-        of the previous layer.
+        Apply one filter on a single slice of the output activation of the previous layer.
         Arguments:
             a_slice_prev -- slice of input data of shape (f, f, n_C_prev)
             W -- weight parameters contained in a window, matrix of shape (f, f, n_C_prev)
@@ -27,49 +41,45 @@ class Convolution:
         c = np.multiply(a_slice_prev, W)
         Z = np.sum(c)
         Z = Z + np.float(b)
-
         return Z
 
-    def zero_pad(self, X, pad):
-        """
-        Pad all images in dataset X with zeros along height and width.
-        Arguments:
-            X -- python numpy array of shape (m, n_H, n_W, n_C) representing a batch of m images.
-        Returns:
-            X_pad -- padded image of shape (m, n_H + 2*pad, n_W + 2*pad, n_C)
-        """
-        X_pad = np.pad(X, ((0,0), (pad, pad), (pad, pad), (0, 0)), mode='constant', constant_values=(0,0))
-        return X_pad
-
-    def forward(self, X, W, b, params):
+    def forward(self, A_prev):
         """
         Implements forward propagation for a convolution.
+        W -- weights, numpy array of shape (f, f, n_C_prev, n_C)
+        b -- biases, numpy array of shape (1, 1, 1, n_C)
         Arguments:
-            A_prev -- output activations of the previous layer, numpy array of 
-                      shape (m, n_H_prev, n_W_prev, n_C_prev)
-            W -- weights, numpy array of shape (f, f, n_C_prev, n_C)
-            b -- biases, numpy array of shape (1, 1, 1, n_C)
+            A_prev -- output activations of previous layer, numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
         Returns:
             Z -- convolution output, numpy array of shape (m, n_H, n_W, n_C)
         """
         # Extract dimensions from A_prev's shape.
         m, n_H_prev, n_W_prev, n_C_prev = A_prev.shape
 
+        # Initialize a parameter matrix if it does not exist. 
+        if 'W' not in self.cache:
+            W_shape = (filter_size, filter_size, n_C_prev, filters)
+            b_shape = (1, 1, 1, filters)
+            self.cache['W'] = layer_init_uniform(W_shape)
+            self.cache['b'] = layer_init_uniform(b_shape)
+
+        # Extract information from params dictionary.
+        stride = self.params['stride']
+        padding = self.params['padding']
+        W = self.cache['W']
+        b = self.cache['b']
+
         # Extract dimensions from W's shape.
         f, f, n_C_prev, n_C = W.shape
 
-        # Extract information from params dictionary.
-        stride = params['stride']
-        padding = params['padding']
-        
         # Compute the dimensions of the output volume.
-        n_H = int((n_H_prev - f + 2*pad) / stride) + 1
-        n_W = int((n_W_prev - f + 2*pad) / stride) + 1 
+        n_H = int((n_H_prev - f + 2*padding) / stride) + 1
+        n_W = int((n_W_prev - f + 2*padding) / stride) + 1 
 
         # Initialize the output volume Z with zeros.
         Z = np.zeros([m, n_H, n_W, n_C])
 
-        # Create A_prev_pad by padding A_prev.
+        # Pad the input volume to the convolution.
         A_prev_pad = zero_pad(A_prev, padding)
 
         # Loop over the training examples.
@@ -90,14 +100,16 @@ class Convolution:
                         horiz_end - horiz_start + f
 
                         # Use the corners to define the 3D slice of a_prev_pad.
+                        # These should be the entire depth of the input layer.
                         a_slice_prev = a_prev_pad[vert_start:vert_end, horiz_start:horiz_end, :]
 
                         # Convolve the 3D slice with the correct filter W and bias b, return one output neuron.
                         Z[i, h, w, c] = conv_single_step(a_slice_prev, W[:, :, :, c], b[:, :, :, c])
 
-        # Check to make sure your output shape is correct 
+        # Check to make sure your output shape is correct. 
         assert(Z.shape == (m, n_H, n_W, n_C))
 
+        # Store information in the cache for backpropagation.
         self.cache['A_prev'] = A_prev
         self.cache['W'] = W
         self.cache['b'] = b
@@ -179,6 +191,5 @@ class Convolution:
         return dA_prev
 
     def update_params(self, lr):
-        self.W = self.W - lr * self.dW
+        5.W = self.W - lr * self.dW
         self.b = self.b - lr * self.db
-
