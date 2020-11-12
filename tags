@@ -13,6 +13,7 @@ Model	code/model.py	/^class Model:$/;"	c
 PoolLayer	code/layers_pooling.py	/^class PoolLayer:$/;"	c
 ReluLayer	code/layers_activation.py	/^class ReluLayer:$/;"	c
 SoftmaxLayer	code/layers_loss.py	/^class SoftmaxLayer:$/;"	c
+SoftmaxLayer	code/loss.py	/^class SoftmaxLayer:$/;"	c
 __init__	code/layers_activation.py	/^    def __init__(self):$/;"	m	class:ReluLayer
 __init__	code/layers_convolution.py	/^    def __init__(self, filters, filter_size, padding, stride):$/;"	m	class:Convolution
 __init__	code/layers_dense.py	/^    def __init__(self, units=100):$/;"	m	class:DenseLayer
@@ -20,6 +21,7 @@ __init__	code/layers_flatten.py	/^    def __init__(self):$/;"	m	class:Flatten
 __init__	code/layers_input.py	/^    def __init__(self):$/;"	m	class:InputLayer
 __init__	code/layers_loss.py	/^    def __init__(self):$/;"	m	class:SoftmaxLayer
 __init__	code/layers_pooling.py	/^    def __init__(self, filter_size=(3,3), stride=1, mode="max"):$/;"	m	class:PoolLayer
+__init__	code/loss.py	/^    def __init__(self):$/;"	m	class:SoftmaxLayer
 __init__	code/model.py	/^    def __init__(self, *model, **kwargs):$/;"	m	class:Model
 backward	code/layers_activation.py	/^    def backward(self, dA):$/;"	m	class:ReluLayer
 backward	code/layers_convolution.py	/^    def backward(self, dZ):$/;"	m	class:Convolution
@@ -28,6 +30,7 @@ backward	code/layers_flatten.py	/^    def backward(self, Z):$/;"	m	class:Flatten
 backward	code/layers_input.py	/^    def backward(self):$/;"	m	class:InputLayer
 backward	code/layers_loss.py	/^    def backward(self, dA):$/;"	m	class:SoftmaxLayer
 backward	code/layers_pooling.py	/^    def backward(self, dA):$/;"	m	class:PoolLayer
+backward	code/loss.py	/^    def backward(self, dA):$/;"	m	class:SoftmaxLayer
 conv_single_step	code/layers_convolution.py	/^    def conv_single_step(self, a_slice_prev, W, b):$/;"	m	class:Convolution
 create_mask_from_window	code/layers_pooling.py	/^    def create_mask_from_window(X):$/;"	m	class:PoolLayer
 evaluate	code/model.py	/^    def evaluate(self, data, labels):$/;"	m	class:Model
@@ -38,6 +41,7 @@ forward	code/layers_flatten.py	/^    def forward(self, Z):$/;"	m	class:Flatten
 forward	code/layers_input.py	/^    def forward(self, X):$/;"	m	class:InputLayer
 forward	code/layers_loss.py	/^    def forward(self, Z,):$/;"	m	class:SoftmaxLayer
 forward	code/layers_pooling.py	/^    def forward(self, A_prev):$/;"	m	class:PoolLayer
+forward	code/loss.py	/^    def forward(self, Z,):$/;"	m	class:SoftmaxLayer
 getParamsAndGrads	code/layers_activation.py	/^    def getParamsAndGrads(self):$/;"	m	class:ReluLayer
 getParamsandGrads	code/layers_pooling.py	/^    def getParamsandGrads(self):$/;"	m	class:PoolLayer
 layer_init_uniform	code/utils.py	/^def layer_init_uniform(x):$/;"	f
@@ -48,6 +52,7 @@ np	code/layers_flatten.py	/^import numpy as np$/;"	I
 np	code/layers_input.py	/^import numpy as np$/;"	I
 np	code/layers_loss.py	/^import numpy as np$/;"	I
 np	code/layers_pooling.py	/^import numpy as np$/;"	I
+np	code/loss.py	/^import numpy as np$/;"	I
 np	code/model.py	/^import numpy as np$/;"	I
 np	code/utils.py	/^import numpy as np$/;"	I
 predict	code/model.py	/^    def predict(self, data):$/;"	m	class:Model
@@ -58,4 +63,5 @@ update_params	code/layers_dense.py	/^    def update_params(self, lr):$/;"	m	clas
 update_params	code/layers_flatten.py	/^    def update_params(self):$/;"	m	class:Flatten
 update_params	code/layers_input.py	/^    def update_params(self):$/;"	m	class:InputLayer
 update_params	code/layers_loss.py	/^    def update_params(self):$/;"	m	class:SoftmaxLayer
+update_params	code/loss.py	/^    def update_params(self):$/;"	m	class:SoftmaxLayer
 zero_pad	code/layers_convolution.py	/^    def zero_pad(self, X, pad):$/;"	m	class:Convolution
