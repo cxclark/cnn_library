@@ -15,17 +15,32 @@ class DenseLayer:
 
         # Initialize a parameter matrix if it does not exist. 
         if 'W' not in self.cache:
-            W_shape = 
-            self.params['W'], self.params['b'] = layer_init_uniform((X.shape[0], self-units))
-        Z = np.dot(self.params['W'], X) + self.params['b']
+            W_shape = X.shape[0]
+            b_shape = self.units
+            self.cache['W'] = layer_init_uniform(W_shape)
+            self.cache['b'] = layer_init_uniform(b_shape)
+        W = self.cache['W']
+        b = self.cache['b']
+
+        # Save the input in the cache for backpropagation.
+        self.cache['dense_input'] = X
+
+        Z = np.dot(W, X) + b
+
         return Z
 
     def backward(self, dZ):
         batch_size = dZ.shape[1]
-        self.grads['dW'] = np.dot(dZ, self.cache['A'].T) / batch_size
-        self.grads['db'] = np.sum(dZ, axis=1, keepdims=True)
-        return np.dot(self.params['W'].T, dZ)
+        self.cache['dW'] = np.dot(dZ, self.cache['A'].T) / batch_size
+        self.cache['db'] = np.sum(dZ, axis=1, keepdims=True)
+        W = self.cache['W']
+        return np.dot(W.T, dZ)
 
     def update_params(self, lr):
-        self.W = self.W - lr * self.dW
-        self.b = self.b - lr * self.db 
+        W = self.cache['W']
+        b = self.cache['b']
+        dW = self.cache['dW']
+        db = self.cache['db']
+
+        self.cache['W'] = W - lr * dW
+        self.cache['b'] = b - lr * db
