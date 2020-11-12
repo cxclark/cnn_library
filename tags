@@ -39,7 +39,6 @@ forward	code/layers_input.py	/^    def forward(self, X):$/;"	m	class:InputLayer
 forward	code/layers_loss.py	/^    def forward(self, Z,):$/;"	m	class:SoftmaxLayer
 forward	code/layers_pooling.py	/^    def forward(self, A_prev):$/;"	m	class:PoolLayer
 getParamsAndGrads	code/layers_activation.py	/^    def getParamsAndGrads(self):$/;"	m	class:ReluLayer
-getParamsAndGrads	code/layers_loss.py	/^    def getParamsAndGrads(self):$/;"	m	class:SoftmaxLayer
 getParamsandGrads	code/layers_pooling.py	/^    def getParamsandGrads(self):$/;"	m	class:PoolLayer
 layer_init_uniform	code/utils.py	/^def layer_init_uniform(x):$/;"	f
 normal	code/utils.py	/^def normal(shape, scale=0.05):$/;"	f
@@ -58,4 +57,5 @@ train	code/model.py	/^    def train(self, data, labels, batch_size=128, epochs=5
 update_params	code/layers_dense.py	/^    def update_params(self, lr):$/;"	m	class:DenseLayer
 update_params	code/layers_flatten.py	/^    def update_params(self):$/;"	m	class:Flatten
 update_params	code/layers_input.py	/^    def update_params(self):$/;"	m	class:InputLayer
+update_params	code/layers_loss.py	/^    def update_params(self):$/;"	m	class:SoftmaxLayer
 zero_pad	code/layers_convolution.py	/^    def zero_pad(self, X, pad):$/;"	m	class:Convolution
