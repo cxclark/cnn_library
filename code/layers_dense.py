@@ -23,3 +23,7 @@ class DenseLayer:
         self.grads['dW'] = np.dot(dZ, self.cache['A'].T) / batch_size
         self.grads['db'] = np.sum(dZ, axis=1, keepdims=True)
         return np.dot(self.params['W'].T, dZ)
+
+    def update_params(self, lr):
+        self.W = self.W - lr * self.dW
+        self.b = self.b - lr * self.db 

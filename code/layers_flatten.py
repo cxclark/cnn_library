@@ -16,3 +16,6 @@ class Flatten:
     def backward(self, Z):
         Z = Z.T
         return Z.reshape(self.cache['shape'])
+
+    def update_params(self):
+        pass 
