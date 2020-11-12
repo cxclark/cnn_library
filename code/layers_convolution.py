@@ -121,7 +121,7 @@ class ConvolutionLayer:
 
     def backward(self, dZ):
         """
-        Implement the backward propagation for a convolution function.
+        Implement the backward propagation for a convolution layer.
         Arguments:
             dZ -- gradient of the cost with respect to the outout of conv layer (Z), 
                   numpy array of shape (m, n_H, n_W, n_C)
@@ -208,5 +208,7 @@ class ConvolutionLayer:
         dW = self.cache['dW']
         db = self.cache['db']
 
+        # Update the parameters.
         self.cache['W'] = W - lr * dW
         self.cache['b'] = b - lr * db
+
