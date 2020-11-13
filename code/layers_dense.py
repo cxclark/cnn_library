@@ -33,14 +33,17 @@ class DenseLayer:
         batch_size = dZ.shape[1]
         self.cache['dW'] = np.dot(dZ, self.cache['A'].T) / batch_size
         self.cache['db'] = np.sum(dZ, axis=1, keepdims=True)
-        W = self.cache['W']
-        return np.dot(W.T, dZ)
-
-    def update_params(self, lr):
+        
+        # Extract the parameters.
         W = self.cache['W']
         b = self.cache['b']
         dW = self.cache['dW']
         db = self.cache['db']
-
+        
+        # Update parameters.
         self.cache['W'] = W - lr * dW
         self.cache['b'] = b - lr * db
+        
+        W = self.cache['W']
+
+        return np.dot(W.T, dZ)

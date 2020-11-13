@@ -119,7 +119,7 @@ class ConvolutionLayer:
 
         return Z
 
-    def backward(self, dZ):
+    def backward(self, dZ, lr):
         """
         Implement the backward propagation for a convolution layer.
         Arguments:
@@ -196,19 +196,8 @@ class ConvolutionLayer:
         # Check that your output shape is correct.
         assert(dA_prev.shape == (m, n_H_prev, n_W_prev, n_C_prev))
 
-        # Store variables in the cache for access.
-        self.cache['dW'] = dW
-        self.cache['db'] = db
-
-        return dA_prev
-
-    def update_params(self, lr):
-        W = self.cache['W']
-        b = self.cache['b']
-        dW = self.cache['dW']
-        db = self.cache['db']
-
         # Update the parameters.
         self.cache['W'] = W - lr * dW
         self.cache['b'] = b - lr * db
 
+        return dA_prev
