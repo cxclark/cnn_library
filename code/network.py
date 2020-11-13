@@ -1,4 +1,6 @@
 import numpy as np
+from utils import get_batches, evaluate
+from utils import 
 
 class Network:
     '''

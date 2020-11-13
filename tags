@@ -81,6 +81,7 @@ np	code/network.py	/^import numpy as np$/;"	I
 np	code/utils.py	/^import numpy as np$/;"	I
 predict	code/model.py	/^    def predict(self, data):$/;"	m	class:Model
 predict	code/network.py	/^    def predict(self, data):$/;"	m	class:Network
+random_mini_batches	code/utils.py	/^def random_mini_batches(X, Y, mini_batch_size=64):$/;"	f
 set_batch_size	code/model.py	/^    def set_batch_size(self, batch_size):$/;"	m	class:Model
 set_loss	code/model.py	/^    def set_loss(self, loss):$/;"	m	class:Model
 set_loss	code/network.py	/^    def set_loss(self, loss):$/;"	m	class:Network
