@@ -56,7 +56,7 @@ class PoolLayer:
                         a_prev_slice = A_prev[i, vert_start:vert_end, horiz_start:horiz_end, c]
 
                         # Compute the pooling operation on the slice
-                        if mode == "max":
+                        if self.params['mode'] == "max":
                             A[i, h, w, c] = np.max(a_prev_slice)
 
         # Store the input in the cache for backpropagation.
@@ -78,7 +78,7 @@ class PoolLayer:
         mask = X == np.max(X)
         return mask
 
-    def backward(self, dA):
+    def backward(self, dA, lr):
         """
         Implements the backward pass of the pooling layer.
         Arguments:

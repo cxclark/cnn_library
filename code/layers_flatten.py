@@ -7,14 +7,10 @@ class Flatten:
     def forward(self, Z):
         shape = Z.shape
         self.cache['shape'] = shape
-        data = np.ravel(Z).reshape(shape[0], -1)
+        data = Z.flatten()
         return data.T
 
-    def backward(self, Z):
+    def backward(self, Z, lr):
         Z = Z.T
         shape = self.cache['shape']
         return Z.reshape(shape)
-
-    # Flatten layers have no parameters. 
-    def update_params(self):
-        pass 

@@ -14,7 +14,7 @@ class SoftmaxLayer:
         out = np.exp(Z) / np.sum(np.exp(Z), axis=0)
         return out
 
-    def backward(self, dA):
+    def backward(self, dA, lr):
         Z = self.cache['Z']
         return dA * (Z * (1 - Z))
 

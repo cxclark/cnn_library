@@ -1,5 +1,5 @@
 import numpy as np
-import utils
+import utils as utils
 
 class DenseLayer:
     """
@@ -14,16 +14,16 @@ class DenseLayer:
     def forward(self, X):
 
         # Initialize a parameter matrix if it does not exist. 
-        if 'W' not in self.cache:
+        if 'W' not in self.params:
             W_shape = X.shape[0]
             b_shape = self.units
-            self.cache['W'] = layer_init_uniform(W_shape)
-            self.cache['b'] = layer_init_uniform(b_shape)
-        W = self.cache['W']
-        b = self.cache['b']
+            self.params['W'] = utils.layer_init_uniform(W_shape)
+            self.params['b'] = utils.layer_init_uniform(b_shape)
+        W = self.params['W']
+        b = self.params['b']
 
         # Save the input in the cache for backpropagation.
-        self.cache['dense_input'] = X
+        self.cache['A'] = X
 
         Z = np.dot(W, X) + b
 
@@ -35,15 +35,15 @@ class DenseLayer:
         self.cache['db'] = np.sum(dZ, axis=1, keepdims=True)
         
         # Extract the parameters.
-        W = self.cache['W']
-        b = self.cache['b']
+        W = self.params['W']
+        b = self.params['b']
         dW = self.cache['dW']
         db = self.cache['db']
         
         # Update parameters.
-        self.cache['W'] = W - lr * dW
-        self.cache['b'] = b - lr * db
+        self.params['W'] = W - lr * dW
+        self.params['b'] = b - lr * db
         
-        W = self.cache['W']
+        W = self.params['W']
 
         return np.dot(W.T, dZ)

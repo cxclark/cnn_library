@@ -11,13 +11,12 @@ class ReluLayer:
         self.layer_type = 'relu'
 
     def forward(self, Z):
+        # Save the input value for backpropagation.
         self.cache['Z'] = Z
         return np.where(Z < 0, 0, Z)
 
-    def backward(self, dA):
+    def backward(self, dA, lr):
+        # Extract the input value.
         Z = self.cache['Z']
+        # Flow the gradient backward according to ReLU's derivative.
         return dA * np.where(Z < 0, 0, 1)
-    
-    # ReLU does not have parameters.
-    def update_params(self):
-        pass
