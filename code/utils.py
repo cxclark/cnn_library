@@ -48,6 +48,45 @@ def load_model(model_name, filename):
 # https://www.jefkine.com/deep/2016/08/01/initialization-of-deep-feedfoward-networks/
 # Other initialization possibilties?
 
+def get_fans(shape):
+    '''
+    :param shape:
+    :return:
+    '''
+    fan_in = shape[0] if len(shape) == 2 else np.prod(shape[1:])
+    fan_out = shape[1] if len(shape) == 2 else shape[0]
+    return fan_in, fan_out
+
+def normal(shape, scale=0.05):
+    '''
+    :param shape:
+    :param scale:
+    :return:
+    '''
+    return np.random.normal(0, scale, size=shape)
+
+def uniform(shape, scale=0.05):
+    '''
+    :param shape:
+    :param scale:
+    :return:
+    '''
+    return np.random.uniform(-scale, scale, size=shape)
+
+def he_normal(shape):
+    '''
+    A function for smart normal distribution based initialization of parameters
+    [He et al. https://arxiv.org/abs/1502.01852]
+    :param fan_in: The number of units in previous layer.
+    :param fan_out: The number of units in current layer.
+    :return:[numpy array, numpy array]: A randomly initialized array of shape [fan_out, fan_in]
+    '''
+    fan_in, fan_out = get_fans(shape)
+    scale = np.sqrt(2. / fan_in)
+    shape = (fan_out, fan_in) if len(shape) == 2 else shape  # For a fully connected network
+    # This supports only CNNs and fully connected networks
+    bias_shape = (fan_out, 1) if len(shape) == 2 else (1, 1, 1, shape[3])   
+    return normal(shape, scale), uniform(bias_shape)
 
 # https://github.com/geohot/tinygrad/blob/master/tinygrad/utils.py
 def layer_init_uniform(x):
@@ -55,7 +94,7 @@ def layer_init_uniform(x):
     ret = np.random.uniform(-1., 1., size=x)/np.sqrt(np.prod(x))
     return ret.astype(np.float32)
 
-def random_mini_batches(X, Y, mini_batch_size=64):
+def random_mini_batches(X, Y, mini_batch_size):
     """
     Creates a list of random minibatches from (X, Y)
     Arguments:
@@ -76,7 +115,7 @@ def random_mini_batches(X, Y, mini_batch_size=64):
     # Shuffle X and Y.
     permutation = list(np.random.permutation(m))
     shuffled_X = X[permutation, :, :, :]
-    shuffled_Y = Y[permutation, :].reshape((num_classes, m))
+    shuffled_Y = Y[permutation, :]
     
     ## DEBUGGING
     ### TOOK OUT .RESHAPE((1,m)) FROM DEEPLEARNING.AI, SHOULD PUT BACK IN?

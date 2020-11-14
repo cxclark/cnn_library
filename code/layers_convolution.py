@@ -116,6 +116,15 @@ class ConvolutionLayer:
         self.cache['A_prev'] = A_prev
         self.params['W'] = W
         self.params['b'] = b
+        
+                
+        ### DEBUGGING ########################################################
+        print(f'A_prev input shape in Convolution forward prop: {A_prev.shape}')
+        print(f'W weights input shape in Convolution forward prop: {W.shape}')
+        print(f'b biases input shape in Convolution forward prop: {b.shape}')
+        print(f'Z output shape in Convolution forward prop: {Z.shape}')
+        
+        
 
         return Z
 
@@ -200,4 +209,14 @@ class ConvolutionLayer:
         self.params['W'] = W - lr * dW
         self.params['b'] = b - lr * db
 
+        
+        
+        ### DEBUGGING ########################################################
+        print(f'dZ input shape in Convolution backward: {dZ.shape}')
+        print(f'dW grads shape in Convolution backward: {dW.shape}')
+        print(f'db grads shape in Convolution backward: {db.shape}')
+        print(f'dA_prev output shape in Convolution backward: {dA_prev.shape}')
+        
+        
+        
         return dA_prev
