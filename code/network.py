@@ -51,17 +51,16 @@ class Model:
                     for layer in self.model:
                         mini_batch_preds = layer.forward(mini_batch_preds)
                     
-                    ## DEBUGGING
+                    ## DEBUGGING ########################################################
                     print(f'mini_batch[0] shape {mini_batch[0].shape}')
                     print(f'mini_batch[1] shape {mini_batch[1].shape}')
                     print(f'mini_batch_preds final shape {mini_batch_preds.shape}')
 
                     # Compute the loss.
-                    dA = mini_batch[1] - mini_batch_preds
+                    dA = mini_batch[1].T - mini_batch_preds
                     
-                    ### DEBUGGING
-                    print(f'mini_batch_preds: {mini_batch_preds}')
-                    print(f'dA.shape (mini_batch[1] - mini_batch_preds): {dA.shape}')
+                    ### DEBUGGING ########################################################
+                    print(f'dA.shape: {dA.shape}')
                     
                     # Loop through the reversed layers in the network.
                     for layer in reversed(self.model):
@@ -76,7 +75,7 @@ class Model:
             predictions -- label vector, numpy array of shape (m, 10).
         """
         # Initialize a numpy array for predictions of the correct shape.
-        predictions = np.zeros(X.shape[0], self.num_classes)
+        predictions = np.zeros((X, self.num_classes))
         
         # Loop through the layers in the network.
         for layer in self.model:

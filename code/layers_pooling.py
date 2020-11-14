@@ -64,10 +64,18 @@ class PoolLayer:
 
         # Check that your output shape is correct.
         assert(A.shape == (m, n_H, n_W, n_C))
+        
+        
+        
+        ### DEBUGGING ########################################################
+        print(f'A_prev input shape in Pooling forward: {A_prev.shape}')
+        print(f'A output shape in Pooling forkward: {A.shape}')
 
+        
+        
         return A
 
-    def create_mask_from_window(X):
+    def create_mask_from_window(self, X):
         """
         Creates a mask from an input matrix X, to identify the max entry of X. Used during backpropagation. 
         Arguments:
@@ -116,21 +124,26 @@ class PoolLayer:
                         horiz_end = horiz_start + f
 
                         # Compute the backward propagation.
-                        if mode == "max":
+                        if self.params['mode'] == "max":
                             # Use the corners and "c" to define the current slice from a_prev.
                             a_prev_slice = a_prev[vert_start:vert_end, horiz_start:horiz_end, c]
 
                             # Create the mask from a_prev_slice.
-                            mask = create_mask_from_window(a_prev_slice)
+                            mask = self.create_mask_from_window(a_prev_slice)
 
                             # Set dA_prev to be dA_prev + (the mask multiplied by the correct entry of dA).
                             dA_prev[i, vert_start:vert_end, horiz_start:horiz_end, c] += np.multiply(mask, dA[i,h,w,c])
 
         # Check that your output shape is correct.
         assert(dA_prev.shape == A_prev.shape)
+        
+        
+        
+        ### DEBUGGING ########################################################
+        print(f'A_prev cache input shape in Pooling backward: {A_prev.shape}')
+        print(f'dA input shape in Pooling backward: {dA.shape}')
+        print(f'dA_prev output shape in Pooling backward: {dA_prev.shape}')
 
+        
+        
         return dA_prev
-
-    # Pooling layers don't have parameters.
-    def update_params(self):
-        pass

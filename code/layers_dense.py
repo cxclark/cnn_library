@@ -5,7 +5,7 @@ class DenseLayer:
     """
     Fully connected dot products. 
     """
-    def __init__(self, units=100):
+    def __init__(self, units=10):
         self.units = units
         self.params = {}
         self.cache = {}
@@ -20,10 +20,14 @@ class DenseLayer:
 
         # Initialize a parameter matrix if it does not exist. 
         if 'W' not in self.params:
-            W_shape = X.shape[1]
-            b_shape = self.units
-            self.params['W'] = utils.layer_init_uniform(W_shape)
-            self.params['b'] = utils.layer_init_uniform(b_shape)
+            self.params['W'], self.params['b'] = utils.he_normal((X.shape[0], self.units))
+            
+#         if 'W' not in self.params:
+#             W_shape = X.shape[1]
+#             b_shape = self.units
+
+#             self.params['W'] = utils.layer_init_uniform(W_shape)
+#             self.params['b'] = utils.layer_init_uniform(b_shape)
         W = self.params['W']
         b = self.params['b']
 
@@ -31,9 +35,9 @@ class DenseLayer:
         self.cache['A'] = X
 
         ### DEBUGGING
-        print(f'W input shape in Dense forward prop: {W.shape}')
         print(f'X input shape in Dense forward prop: {X.shape}')
-        print(f'b input shape in Dense forward prop: {b.shape}')
+        print(f'W weights input shape in Dense forward prop: {W.shape}')
+        print(f'b biases input shape in Dense forward prop: {b.shape}')
         
         Z = np.dot(W, X) + b
 
@@ -55,5 +59,11 @@ class DenseLayer:
         self.params['b'] = b - lr * db
         
         W = self.params['W']
+        
+        out = np.dot(W.T, dZ)
+        
+        ### DEBUGGING #####################################################
+        print(f'dZ input shape in Dense backward: {dZ.shape}')
+        print(f'out output shape in Dense backward: {out.shape}')
 
-        return np.dot(W.T, dZ)
+        return out

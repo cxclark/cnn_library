@@ -12,14 +12,23 @@ class SoftmaxLayer:
     def forward(self, Z):
         self.cache['Z'] = Z
         out = np.exp(Z) / np.sum(np.exp(Z), axis=0)
+        
+        ### DEBUGGING ########################################################
+        print(f'Z input shape in Softmax forward prop: {Z.shape}')
+        print(f'out output shape in Softmax forward prop: {out.shape}')
+        
         return out
 
     def backward(self, dA, lr):
         Z = self.cache['Z']
-        return dA * (Z * (1 - Z))
-
-    def update_params(self):
-        pass
+        
+        ### DEBUGGING ########################################################
+        print(f'dA input shape in Softmax backward: {dA.shape}')
+        print(f'Z input shape in Softmax backward: {Z.shape}')
+        
+        out = dA * (Z * (1 - Z))
+        
+        return out
 
 class CategoricalCrossEntropy:
     def compute_loss(labels, predictions):
