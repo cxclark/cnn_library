@@ -14,23 +14,24 @@ cifar_classes = [
     'truck'
 ]
 
-
 def to_categorical(labels, num_classes):
     """
     Converts image labels to one-hot encoded binary vectors with length of num_classes.
     Arguments:
-        labels -- image classification labels represented as index in a list, integer.
+        labels -- image classification labels e.g. 1 = 'airplane', nested numpy arrays of integers.
         num_classes -- number of classes in image classification task, integer.
     Returns:
-        label_vec -- binary vector representation of the class, with 1 for correct label, 0's otherwise. 
+        label_vec -- binary vector representation of the class, 1 for correct label, 0's otherwise. 
     """
     # Initialize a zero matrix with the correct dimensions.
-    label_vec = np.zeros(len(labels), int(num_classes))
+    label_vec = np.zeros((len(labels), num_classes))
     # Loop through the labels in the input.
-    for label in labels:
+    for i in range(len(labels)):
+        # Create an new index for binary encoding, subtracting 1. 
+        # An image with label [6] on a scale of 1-10, will have a 1 at index 5 in the vector.
+        new_index = labels[i][0] - 1
         # Replace the 0 at the given location with a 1 for the correct class.
-        # Subtract 1 to account for indexing
-        label_vec[label - 1] = 1
+        label_vec[i][new_index] = 1
     return label_vec
 
 def normal(shape, scale=0.05):
@@ -44,6 +45,10 @@ def load_model(model_name, filename):
     model_name = pickle.load(open(filename, 'rb'))
     return
 
+# https://www.jefkine.com/deep/2016/08/01/initialization-of-deep-feedfoward-networks/
+# Other initialization possibilties?
+
+
 # https://github.com/geohot/tinygrad/blob/master/tinygrad/utils.py
 def layer_init_uniform(x):
     # Size is your output shape, int or tuple of ints
@@ -55,22 +60,26 @@ def random_mini_batches(X, Y, mini_batch_size=64):
     Creates a list of random minibatches from (X, Y)
     Arguments:
         X -- input data, of shape (m, n_H, n_W, c)
-        Y -- true "label" vector of shape (m, 1)
+        Y -- true "label" vector of shape (m, num_classes)
         mini_batch_size -- size of mini-batches, integer
 
     Returns:
         mini_batches -- list of synchronous (mini_batch_X, mini_batch_Y)
     """
-
+    # Extract the input data shapes.
     m = X.shape[0]
+    num_classes = Y.shape[1]
+    
+    # Instantiate an empty list to hold mini batch X-Y tuples with size batch_size.
     mini_batches = []
 
-    # Shuffle (X, Y)
+    # Shuffle X and Y.
     permutation = list(np.random.permutation(m))
     shuffled_X = X[permutation, :, :, :]
-    shuffled_Y = Y[permutation, :]
+    shuffled_Y = Y[permutation, :].reshape((num_classes, m))
     
-    ## TOOK OUT .RESHAPE((1,m)) FROM DEEPLEARNING.AI, SHOULD PUT BACK IN?
+    ## DEBUGGING
+    ### TOOK OUT .RESHAPE((1,m)) FROM DEEPLEARNING.AI, SHOULD PUT BACK IN?
 
     # Divide (shuffled_X, shuffled_Y) into batches minus the end case.
     num_complete_minibatches = m // mini_batch_size
