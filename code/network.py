@@ -23,17 +23,19 @@ class Model:
         Trains the network.
         Arguments:
             X -- dataset of images to train on, numpy array of shape (m, n_H, n_W, c).
-            Y -- label vector containing true label images, numpy array of shape (m, 1).
+            Y -- label vector containing true label images, numpy array of shape (m, num_classes).
             batch_size -- size of mini-batches, integer.
             learning_rate -- learning rate to use in updating parameters, scalar.
             epochs -- number of iterations through entire dataset to use in training, integer.
         Returns:
             None
         """        
-        mini_batch_size = batch_size
-        
+        # Convert labels to binary vector representations of the correct class.
+        Y = utils.to_categorical(Y, self.num_classes)
+        # Y now has dimesnions (m, num_classes)
+                
         # Shuffle X and Y into random mini batches.
-        mini_batches = utils.random_mini_batches(X, Y, mini_batch_size)
+        mini_batches = utils.random_mini_batches(X, Y, batch_size)
         
         # Loop through the epochs.
         for epoch in range(epochs):

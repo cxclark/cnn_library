@@ -12,10 +12,15 @@ class DenseLayer:
         self.type = 'fc'
 
     def forward(self, X):
+        """
+        Implements forward propagation of dense layer.
+        Arguments:
+            X -- input data, of shape (64, 768)
+        """
 
         # Initialize a parameter matrix if it does not exist. 
         if 'W' not in self.params:
-            W_shape = X.shape[0]
+            W_shape = X.shape[1]
             b_shape = self.units
             self.params['W'] = utils.layer_init_uniform(W_shape)
             self.params['b'] = utils.layer_init_uniform(b_shape)
@@ -25,6 +30,11 @@ class DenseLayer:
         # Save the input in the cache for backpropagation.
         self.cache['A'] = X
 
+        ### DEBUGGING
+        print(f'W input shape in Dense forward prop: {W.shape}')
+        print(f'X input shape in Dense forward prop: {X.shape}')
+        print(f'b input shape in Dense forward prop: {b.shape}')
+        
         Z = np.dot(W, X) + b
 
         return Z
