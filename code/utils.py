@@ -139,3 +139,33 @@ def random_mini_batches(X, Y, mini_batch_size):
         mini_batches.append(mini_batch)
 
     return mini_batches
+
+def get_x_batches(X, mini_batch_size):
+    """
+    Creates a list of minibatches of X for predictions.
+    Arguments:
+        X -- input data, of shape (m, n_H, n_W, c)
+        mini_batch_size -- size of mini-batches, integer
+
+    Returns:
+        mini_batches -- list of mini batches of input X.
+    """
+    # Extract the input data shapes.
+    m = X.shape[0]
+    
+    # Instantiate an empty list to hold mini batch X-Y tuples with size batch_size.
+    mini_batches_X = []
+
+    # Divide X into batches minus the end case.
+    num_complete_minibatches = m // mini_batch_size
+
+    for k in range(0, num_complete_minibatches):
+        mini_batch_X = X[ k*mini_batch_size:(k+1)*mini_batch_size, :,:,:]
+        mini_batches_X.append(mini_batch_X)
+
+    # Handle the end case if the last mini-batch < mini_batch_size.
+    if m % mini_batch_size != 0:
+        mini_batch_X = X[ num_complete_minibatches*mini_batch_size: , :,:,:]
+        mini_batches_X.append(mini_batch_X)
+
+    return mini_batches_X

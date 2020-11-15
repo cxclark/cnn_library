@@ -17,6 +17,8 @@ class Model:
         """
         self.model = model
         self.num_classes = 10
+        self.batch_size = 0
+        self.costs = []
 
     def train(self, X, Y, learning_rate, batch_size=64, epochs=100):
         """
@@ -30,6 +32,9 @@ class Model:
         Returns:
             None
         """        
+        # Assign batch size given during training to model batch_size.
+        self.batch_size = batch_size
+        
         # Convert labels to binary vector representations of the correct class.
         Y = utils.to_categorical(Y, self.num_classes)
         # Y now has dimesnions (m, num_classes)
@@ -46,6 +51,7 @@ class Model:
                     
                     # Extract mini_batch_X and save it as the input.
                     mini_batch_preds = mini_batch[0]
+                    mini_batch_true_labels = mini_batch[1]
                     
                     #Loop through the layers in the network.
                     for layer in self.model:
@@ -53,11 +59,23 @@ class Model:
                     
                     ## DEBUGGING ########################################################
                     print(f'mini_batch[0] shape {mini_batch[0].shape}')
-                    print(f'mini_batch[1] shape {mini_batch[1].shape}')
+                    print(f'mini_batch_true_labels shape {mini_batch_true_labels.shape}')
                     print(f'mini_batch_preds final shape {mini_batch_preds.shape}')
 
-                    # Compute the loss.
-                    dA = mini_batch[1].T - mini_batch_preds
+                    # Compute the loss
+                    cost = -np.sum(Y * np.log(mini_batch_preds + 1e-8))
+                    print(f'Cost: {cost}')
+
+                    # Compute the accuracy.
+                    Y_hat = np.argmax(mini_batch_preds, axis=0)
+                    accuracy = (Y_hat == Y).mean()
+                    accuracy = accuracy * 100
+                    
+                    print(f'Cost: {cost}')
+                    print(f'Accuracy: {accuracy}')
+                    
+                    # Compute the derivative.
+                    dA = mini_batch_true_labels.T - mini_batch_preds
                     
                     ### DEBUGGING ########################################################
                     print(f'dA.shape: {dA.shape}')
@@ -65,6 +83,7 @@ class Model:
                     # Loop through the reversed layers in the network.
                     for layer in reversed(self.model):
                         dA = layer.backward(dA, learning_rate)
+
 
     def predict(self, X):
         """
@@ -74,13 +93,28 @@ class Model:
         Returns:
             predictions -- label vector, numpy array of shape (m, 10).
         """
+        # Extract the input data shapes.
+        m = X.shape[0]
+        
         # Initialize a numpy array for predictions of the correct shape.
-        predictions = np.zeros((X, self.num_classes))
+        predictions = np.zeros((self.num_classes, m))
         
-        # Loop through the layers in the network.
-        for layer in self.model:
-            predictions = layer.forward(predictions)
-        
+        # Divide X into batches minus the end case.
+        num_complete_minibatches = m // self.batch_size
+
+        for k, mini_batch_X in enumerate(utils.get_x_batches(X, self.batch_size)):
+            
+            mini_batch_preds = mini_batch_X.copy()
+            
+            #Loop through the layers in the network.
+            for layer in self.model:
+                mini_batch_preds = layer.forward(mini_batch_preds)
+            
+            if k <= num_complete_minibatches - 1:
+                predictions[:, k*self.batch_size:(k+1)*self.batch_size] = mini_batch_preds
+            else:
+                predictions[:, k*self.batch_size: ] = mini_batch_preds
+
         return predictions
 
     def evaluate(self, X, Y):
@@ -94,4 +128,17 @@ class Model:
         """
         predictions = self.predict(X)
         
-        return predictions, Y
+        predictions = predctions.T
+        
+        
+
+# def predict(self, X, Y):
+# 	A, cache = self.forward(X)
+# 	y_hat = np.argmax(A, axis=0)
+# 	Y = np.argmax(Y, axis=1)
+# 	accuracy = (y_hat == Y).mean()
+# 	return accuracy * 100
+        
+#         predictions = self.predict(X)
+        
+#         return predictions, Y
