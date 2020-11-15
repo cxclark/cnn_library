@@ -22,12 +22,6 @@ class DenseLayer:
         if 'W' not in self.params:
             self.params['W'], self.params['b'] = utils.he_normal((X.shape[0], self.units))
             
-#         if 'W' not in self.params:
-#             W_shape = X.shape[1]
-#             b_shape = self.units
-
-#             self.params['W'] = utils.layer_init_uniform(W_shape)
-#             self.params['b'] = utils.layer_init_uniform(b_shape)
         W = self.params['W']
         b = self.params['b']
 

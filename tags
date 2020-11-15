@@ -7,20 +7,23 @@
 !_TAG_PROGRAM_VERSION	0.0.0	//
 Building a Convolutional Neural Network Using Only Numpy	.ipynb_checkpoints/README-checkpoint.md	/^# Building a Convolutional Neural Network Using Only Numpy$/;"	c
 Building a Convolutional Neural Network Using Only Numpy	README.md	/^# Building a Convolutional Neural Network Using Only Numpy$/;"	c
+CategoricalCrossEntropy	code/.ipynb_checkpoints/loss-checkpoint.py	/^class CategoricalCrossEntropy:$/;"	c
 CategoricalCrossEntropy	code/loss.py	/^class CategoricalCrossEntropy:$/;"	c
 Conclusions	.ipynb_checkpoints/README-checkpoint.md	/^## Conclusions$/;"	s
 Conclusions	README.md	/^## Conclusions$/;"	s
-Convolution	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^class Convolution:$/;"	c
+ConvolutionLayer	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^class ConvolutionLayer:$/;"	c
 ConvolutionLayer	code/layers_convolution.py	/^class ConvolutionLayer:$/;"	c
+DenseLayer	code/.ipynb_checkpoints/layers_dense-checkpoint.py	/^class DenseLayer:$/;"	c
 DenseLayer	code/layers_dense.py	/^class DenseLayer:$/;"	c
 Executive Summary	.ipynb_checkpoints/README-checkpoint.md	/^## Executive Summary$/;"	s
 Executive Summary	README.md	/^## Executive Summary$/;"	s
+Flatten	code/.ipynb_checkpoints/layers_flatten-checkpoint.py	/^class Flatten:$/;"	c
 Flatten	code/layers_flatten.py	/^class Flatten:$/;"	c
 Future Work	.ipynb_checkpoints/README-checkpoint.md	/^## Future Work$/;"	s
 Future Work	README.md	/^## Future Work$/;"	s
-InputLayer	code/layers_input.py	/^class InputLayer:$/;"	c
-Model	code/model.py	/^class Model:$/;"	c
-Network	code/network.py	/^class Network:$/;"	c
+Model	code/.ipynb_checkpoints/network-checkpoint.py	/^class Model:$/;"	c
+Model	code/network.py	/^class Model:$/;"	c
+PoolLayer	code/.ipynb_checkpoints/layers_pooling-checkpoint.py	/^class PoolLayer:$/;"	c
 PoolLayer	code/layers_pooling.py	/^class PoolLayer:$/;"	c
 Problem Statement	.ipynb_checkpoints/README-checkpoint.md	/^## Problem Statement$/;"	s
 Problem Statement	README.md	/^## Problem Statement$/;"	s
@@ -28,71 +31,103 @@ ReluLayer	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^class ReluLa
 ReluLayer	code/layers_activation.py	/^class ReluLayer:$/;"	c
 Resources and Inspiration:	.ipynb_checkpoints/README-checkpoint.md	/^## Resources and Inspiration:$/;"	s
 Resources and Inspiration:	README.md	/^## Resources and Inspiration:$/;"	s
+SoftmaxLayer	code/.ipynb_checkpoints/loss-checkpoint.py	/^class SoftmaxLayer:$/;"	c
 SoftmaxLayer	code/loss.py	/^class SoftmaxLayer:$/;"	c
 __init__	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^    def __init__(self):$/;"	m	class:ReluLayer
-__init__	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def __init__(self, filters, filter_size, padding, stride):$/;"	m	class:Convolution
+__init__	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def __init__(self, filters=3, filter_size=3, padding=1, stride=1):$/;"	m	class:ConvolutionLayer
+__init__	code/.ipynb_checkpoints/layers_dense-checkpoint.py	/^    def __init__(self, units=10):$/;"	m	class:DenseLayer
+__init__	code/.ipynb_checkpoints/layers_flatten-checkpoint.py	/^    def __init__(self):$/;"	m	class:Flatten
+__init__	code/.ipynb_checkpoints/layers_pooling-checkpoint.py	/^    def __init__(self, filter_size=2, stride=2, mode="max"):$/;"	m	class:PoolLayer
+__init__	code/.ipynb_checkpoints/loss-checkpoint.py	/^    def __init__(self):$/;"	m	class:SoftmaxLayer
+__init__	code/.ipynb_checkpoints/network-checkpoint.py	/^    def __init__(self, *model, **kwargs):$/;"	m	class:Model
 __init__	code/layers_activation.py	/^    def __init__(self):$/;"	m	class:ReluLayer
 __init__	code/layers_convolution.py	/^    def __init__(self, filters=3, filter_size=3, padding=1, stride=1):$/;"	m	class:ConvolutionLayer
-__init__	code/layers_dense.py	/^    def __init__(self, units=100):$/;"	m	class:DenseLayer
+__init__	code/layers_dense.py	/^    def __init__(self, units=10):$/;"	m	class:DenseLayer
 __init__	code/layers_flatten.py	/^    def __init__(self):$/;"	m	class:Flatten
-__init__	code/layers_input.py	/^    def __init__(self):$/;"	m	class:InputLayer
 __init__	code/layers_pooling.py	/^    def __init__(self, filter_size=2, stride=2, mode="max"):$/;"	m	class:PoolLayer
 __init__	code/loss.py	/^    def __init__(self):$/;"	m	class:SoftmaxLayer
-__init__	code/model.py	/^    def __init__(self, *model, **kwargs):$/;"	m	class:Model
-__init__	code/network.py	/^    def __init__(self, layers = []):$/;"	m	class:Network
-backward	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^    def backward(self, dA):$/;"	m	class:ReluLayer
-backward	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def backward(self, dZ):$/;"	m	class:Convolution
-backward	code/layers_activation.py	/^    def backward(self, dA):$/;"	m	class:ReluLayer
-backward	code/layers_convolution.py	/^    def backward(self, dZ):$/;"	m	class:ConvolutionLayer
+__init__	code/network.py	/^    def __init__(self, *model, **kwargs):$/;"	m	class:Model
+backward	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^    def backward(self, dA, lr):$/;"	m	class:ReluLayer
+backward	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def backward(self, dZ, lr):$/;"	m	class:ConvolutionLayer
+backward	code/.ipynb_checkpoints/layers_dense-checkpoint.py	/^    def backward(self, dZ, lr):$/;"	m	class:DenseLayer
+backward	code/.ipynb_checkpoints/layers_flatten-checkpoint.py	/^    def backward(self, Z, lr):$/;"	m	class:Flatten
+backward	code/.ipynb_checkpoints/layers_pooling-checkpoint.py	/^    def backward(self, dA, lr):$/;"	m	class:PoolLayer
+backward	code/.ipynb_checkpoints/loss-checkpoint.py	/^    def backward(self, dA, lr):$/;"	m	class:SoftmaxLayer
+backward	code/layers_activation.py	/^    def backward(self, dA, lr):$/;"	m	class:ReluLayer
+backward	code/layers_convolution.py	/^    def backward(self, dZ, lr):$/;"	m	class:ConvolutionLayer
 backward	code/layers_dense.py	/^    def backward(self, dZ, lr):$/;"	m	class:DenseLayer
-backward	code/layers_flatten.py	/^    def backward(self, Z):$/;"	m	class:Flatten
-backward	code/layers_input.py	/^    def backward(self):$/;"	m	class:InputLayer
-backward	code/layers_pooling.py	/^    def backward(self, dA):$/;"	m	class:PoolLayer
-backward	code/loss.py	/^    def backward(self, dA):$/;"	m	class:SoftmaxLayer
+backward	code/layers_flatten.py	/^    def backward(self, Z, lr):$/;"	m	class:Flatten
+backward	code/layers_pooling.py	/^    def backward(self, dA, lr):$/;"	m	class:PoolLayer
+backward	code/loss.py	/^    def backward(self, dA, lr):$/;"	m	class:SoftmaxLayer
+cifar_classes	code/.ipynb_checkpoints/utils-checkpoint.py	/^cifar_classes = [$/;"	v
+cifar_classes	code/utils.py	/^cifar_classes = [$/;"	v
+compute_derivative	code/.ipynb_checkpoints/loss-checkpoint.py	/^    def compute_derivative(labels, predictions):$/;"	m	class:CategoricalCrossEntropy
 compute_derivative	code/loss.py	/^    def compute_derivative(labels, predictions):$/;"	m	class:CategoricalCrossEntropy
+compute_loss	code/.ipynb_checkpoints/loss-checkpoint.py	/^    def compute_loss(labels, predictions):$/;"	m	class:CategoricalCrossEntropy
 compute_loss	code/loss.py	/^    def compute_loss(labels, predictions):$/;"	m	class:CategoricalCrossEntropy
-conv_single_step	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def conv_single_step(self, a_slice_prev, W, b):$/;"	m	class:Convolution
+conv_single_step	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def conv_single_step(self, a_slice_prev, W, b):$/;"	m	class:ConvolutionLayer
 conv_single_step	code/layers_convolution.py	/^    def conv_single_step(self, a_slice_prev, W, b):$/;"	m	class:ConvolutionLayer
-create_mask_from_window	code/layers_pooling.py	/^    def create_mask_from_window(X):$/;"	m	class:PoolLayer
-evaluate	code/model.py	/^    def evaluate(self, data, labels):$/;"	m	class:Model
-evaluate	code/network.py	/^    def evaluate(self, X, Y):$/;"	m	class:Network
+create_mask_from_window	code/.ipynb_checkpoints/layers_pooling-checkpoint.py	/^    def create_mask_from_window(self, X):$/;"	m	class:PoolLayer
+create_mask_from_window	code/layers_pooling.py	/^    def create_mask_from_window(self, X):$/;"	m	class:PoolLayer
+evaluate	code/.ipynb_checkpoints/network-checkpoint.py	/^    def evaluate(self, X, Y):$/;"	m	class:Model
+evaluate	code/network.py	/^    def evaluate(self, X, Y):$/;"	m	class:Model
+export_model	code/.ipynb_checkpoints/utils-checkpoint.py	/^def export_model(model_name, filename):$/;"	f
+export_model	code/utils.py	/^def export_model(model_name, filename):$/;"	f
 forward	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^    def forward(self, Z):$/;"	m	class:ReluLayer
-forward	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def forward(self, A_prev, W, b, params):$/;"	m	class:Convolution
+forward	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def forward(self, A_prev):$/;"	m	class:ConvolutionLayer
+forward	code/.ipynb_checkpoints/layers_dense-checkpoint.py	/^    def forward(self, X):$/;"	m	class:DenseLayer
+forward	code/.ipynb_checkpoints/layers_flatten-checkpoint.py	/^    def forward(self, Z):$/;"	m	class:Flatten
+forward	code/.ipynb_checkpoints/layers_pooling-checkpoint.py	/^    def forward(self, A_prev):$/;"	m	class:PoolLayer
+forward	code/.ipynb_checkpoints/loss-checkpoint.py	/^    def forward(self, Z):$/;"	m	class:SoftmaxLayer
 forward	code/layers_activation.py	/^    def forward(self, Z):$/;"	m	class:ReluLayer
 forward	code/layers_convolution.py	/^    def forward(self, A_prev):$/;"	m	class:ConvolutionLayer
 forward	code/layers_dense.py	/^    def forward(self, X):$/;"	m	class:DenseLayer
 forward	code/layers_flatten.py	/^    def forward(self, Z):$/;"	m	class:Flatten
-forward	code/layers_input.py	/^    def forward(self, X):$/;"	m	class:InputLayer
 forward	code/layers_pooling.py	/^    def forward(self, A_prev):$/;"	m	class:PoolLayer
-forward	code/loss.py	/^    def forward(self, Z,):$/;"	m	class:SoftmaxLayer
-getParamsAndGrads	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^    def getParamsAndGrads(self):$/;"	m	class:ReluLayer
+forward	code/loss.py	/^    def forward(self, Z):$/;"	m	class:SoftmaxLayer
+get_fans	code/.ipynb_checkpoints/utils-checkpoint.py	/^def get_fans(shape):$/;"	f
+get_fans	code/utils.py	/^def get_fans(shape):$/;"	f
+get_x_batches	code/.ipynb_checkpoints/utils-checkpoint.py	/^def get_x_batches(X, mini_batch_size):$/;"	f
+get_x_batches	code/utils.py	/^def get_x_batches(X, mini_batch_size):$/;"	f
+he_normal	code/.ipynb_checkpoints/utils-checkpoint.py	/^def he_normal(shape):$/;"	f
+he_normal	code/utils.py	/^def he_normal(shape):$/;"	f
+layer_init_uniform	code/.ipynb_checkpoints/utils-checkpoint.py	/^def layer_init_uniform(x):$/;"	f
 layer_init_uniform	code/utils.py	/^def layer_init_uniform(x):$/;"	f
+load_model	code/.ipynb_checkpoints/utils-checkpoint.py	/^def load_model(model_name, filename):$/;"	f
+load_model	code/utils.py	/^def load_model(model_name, filename):$/;"	f
+normal	code/.ipynb_checkpoints/utils-checkpoint.py	/^def normal(shape, scale=0.05):$/;"	f
 normal	code/utils.py	/^def normal(shape, scale=0.05):$/;"	f
+np	code/.ipynb_checkpoints/layers_activation-checkpoint.py	/^import numpy as np$/;"	I
 np	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^import numpy as np$/;"	I
+np	code/.ipynb_checkpoints/layers_dense-checkpoint.py	/^import numpy as np$/;"	I
+np	code/.ipynb_checkpoints/layers_flatten-checkpoint.py	/^import numpy as np$/;"	I
+np	code/.ipynb_checkpoints/layers_pooling-checkpoint.py	/^import numpy as np$/;"	I
+np	code/.ipynb_checkpoints/loss-checkpoint.py	/^import numpy as np$/;"	I
+np	code/.ipynb_checkpoints/network-checkpoint.py	/^import numpy as np$/;"	I
+np	code/.ipynb_checkpoints/utils-checkpoint.py	/^import numpy as np$/;"	I
 np	code/layers_activation.py	/^import numpy as np$/;"	I
 np	code/layers_convolution.py	/^import numpy as np$/;"	I
 np	code/layers_dense.py	/^import numpy as np$/;"	I
 np	code/layers_flatten.py	/^import numpy as np$/;"	I
-np	code/layers_input.py	/^import numpy as np$/;"	I
 np	code/layers_pooling.py	/^import numpy as np$/;"	I
 np	code/loss.py	/^import numpy as np$/;"	I
-np	code/model.py	/^import numpy as np$/;"	I
 np	code/network.py	/^import numpy as np$/;"	I
 np	code/utils.py	/^import numpy as np$/;"	I
-predict	code/model.py	/^    def predict(self, data):$/;"	m	class:Model
-predict	code/network.py	/^    def predict(self, X):$/;"	m	class:Network
-random_mini_batches	code/utils.py	/^def random_mini_batches(X, Y, mini_batch_size=64):$/;"	f
-set_batch_size	code/model.py	/^    def set_batch_size(self, batch_size):$/;"	m	class:Model
-set_loss	code/model.py	/^    def set_loss(self, loss):$/;"	m	class:Model
-train	code/model.py	/^    def train(self, data, labels, batch_size=128, epochs=50,$/;"	m	class:Model
-train	code/network.py	/^    def train(self, X, Y, learning_rate):$/;"	m	class:Network
-update_params	code/layers_activation.py	/^    def update_params(self):$/;"	m	class:ReluLayer
-update_params	code/layers_convolution.py	/^    def update_params(self, lr):$/;"	m	class:ConvolutionLayer
-update_params	code/layers_dense.py	/^    def update_params(self, lr):$/;"	m	class:DenseLayer
-update_params	code/layers_flatten.py	/^    def update_params(self):$/;"	m	class:Flatten
-update_params	code/layers_input.py	/^    def update_params(self):$/;"	m	class:InputLayer
-update_params	code/layers_pooling.py	/^    def update_params(self):$/;"	m	class:PoolLayer
-update_params	code/loss.py	/^    def update_params(self):$/;"	m	class:SoftmaxLayer
+predict	code/.ipynb_checkpoints/network-checkpoint.py	/^    def predict(self, X):$/;"	m	class:Model
+predict	code/network.py	/^    def predict(self, X):$/;"	m	class:Model
+random_mini_batches	code/.ipynb_checkpoints/utils-checkpoint.py	/^def random_mini_batches(X, Y, mini_batch_size):$/;"	f
+random_mini_batches	code/utils.py	/^def random_mini_batches(X, Y, mini_batch_size):$/;"	f
+to_categorical	code/.ipynb_checkpoints/utils-checkpoint.py	/^def to_categorical(labels, num_classes):$/;"	f
+to_categorical	code/utils.py	/^def to_categorical(labels, num_classes):$/;"	f
+train	code/.ipynb_checkpoints/network-checkpoint.py	/^    def train(self, X, Y, learning_rate, batch_size=64, epochs=100):$/;"	m	class:Model
+train	code/network.py	/^    def train(self, X, Y, learning_rate, batch_size=64, epochs=100):$/;"	m	class:Model
+uniform	code/.ipynb_checkpoints/utils-checkpoint.py	/^def uniform(shape, scale=0.05):$/;"	f
+uniform	code/utils.py	/^def uniform(shape, scale=0.05):$/;"	f
+utils	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^import utils as utils$/;"	I
+utils	code/.ipynb_checkpoints/layers_dense-checkpoint.py	/^import utils as utils$/;"	I
+utils	code/.ipynb_checkpoints/network-checkpoint.py	/^import utils as utils$/;"	I
+utils	code/layers_convolution.py	/^import utils as utils$/;"	I
+utils	code/layers_dense.py	/^import utils as utils$/;"	I
 utils	code/network.py	/^import utils as utils$/;"	I
-zero_pad	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def zero_pad(self, X, pad):$/;"	m	class:Convolution
+zero_pad	code/.ipynb_checkpoints/layers_convolution-checkpoint.py	/^    def zero_pad(self, X, pad):$/;"	m	class:ConvolutionLayer
 zero_pad	code/layers_convolution.py	/^    def zero_pad(self, X, pad):$/;"	m	class:ConvolutionLayer

@@ -10,8 +10,9 @@ class SoftmaxLayer:
         self.cache = {}
 
     def forward(self, Z):
-        self.cache['Z'] = Z
-        out = np.exp(Z) / np.sum(np.exp(Z), axis=0)
+        self.cache['Z'] = Z        
+        expZ = np.exp(Z - np.max(Z))
+        return expZ / expZ.sum(axis=0, keepdims=True)
         
         ### DEBUGGING ########################################################
         print(f'Z input shape in Softmax forward prop: {Z.shape}')
