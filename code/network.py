@@ -35,9 +35,14 @@ class Model:
         # Assign batch size given during training to model batch_size.
         self.batch_size = batch_size
         
+        # Normalize the input data.
+        X = X / 255
+        
         # Convert labels to binary vector representations of the correct class.
         Y = utils.to_categorical(Y, self.num_classes)
-        # Y now has dimesnions (m, num_classes)
+        
+        # Check that Y has the shape (m, num_classes).
+        assert(Y.shape == (Y.shape[0], self.num_classes))
                 
         # Shuffle X and Y into random mini batches.
         mini_batches = utils.random_mini_batches(X, Y, batch_size)
@@ -51,6 +56,7 @@ class Model:
                     
                     # Extract mini_batch_X and save it as the input.
                     mini_batch_preds = mini_batch[0]
+                    # Extract mini_batch_X true labels.
                     mini_batch_true_labels = mini_batch[1]
                     
                     #Loop through the layers in the network.
@@ -62,18 +68,6 @@ class Model:
                     print(f'mini_batch_true_labels shape {mini_batch_true_labels.shape}')
                     print(f'mini_batch_preds final shape {mini_batch_preds.shape}')
 
-                    # Compute the loss
-                    cost = -np.sum(Y * np.log(mini_batch_preds + 1e-8))
-                    print(f'Cost: {cost}')
-
-                    # Compute the accuracy.
-                    Y_hat = np.argmax(mini_batch_preds, axis=0)
-                    accuracy = (Y_hat == Y).mean()
-                    accuracy = accuracy * 100
-                    
-                    print(f'Cost: {cost}')
-                    print(f'Accuracy: {accuracy}')
-                    
                     # Compute the derivative.
                     dA = mini_batch_true_labels.T - mini_batch_preds
                     
@@ -83,7 +77,28 @@ class Model:
                     # Loop through the reversed layers in the network.
                     for layer in reversed(self.model):
                         dA = layer.backward(dA, learning_rate)
+            
+            # Compute the loss after each epoch
+            probabilities = self.predict(X)
+            probabilities = probabilities.T
+            loss = -np.sum(Y * np.log(probabilities + 1e-8))
+            print(f'Loss: {loss}')
 
+            # Compute the accuracy.
+            # np.argmax() returns the indices of the maximum values along an axis.
+            Y_hat_temp = np.argmax(probabilities, axis=1)
+            Y_temp = np.argmax(Y, axis=1)            
+            accuracy = (Y_hat_temp == Y_temp).mean()
+            accuracy = round(accuracy * 100, 3)               
+            print(f'Accuracy: {accuracy}%')
+            
+            #############################################################
+            print(f'probabilities: {probabilities}')
+            print(f'probabilities shape: {probabilities.shape}')
+            print(f'Y_hat_temp: {Y_hat_temp}')
+            print(f'Y_temp: {Y_temp}')
+            print(f'Y_hat_temp shape: {Y_hat_temp.shape}')
+            
 
     def predict(self, X):
         """
@@ -93,6 +108,9 @@ class Model:
         Returns:
             predictions -- label vector, numpy array of shape (m, 10).
         """
+        # Normalize the input data.
+        X = X / 255
+        
         # Extract the input data shapes.
         m = X.shape[0]
         
@@ -126,6 +144,9 @@ class Model:
         Returns:
             
         """
+        
+        X = X / 255
+        
         predictions = self.predict(X)
         
         predictions = predctions.T
