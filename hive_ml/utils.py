@@ -67,7 +67,7 @@ def uniform(shape, scale=0.05):
     return np.random.uniform(-scale, scale, size=shape)
 
 
-def layer_init_uniform(x):
+def layer_uniform(x):
     """
     Initialization inspired by tinygrad library.
     https://github.com/geohot/tinygrad/blob/master/tinygrad/utils.py
