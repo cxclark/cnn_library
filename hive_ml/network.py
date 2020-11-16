@@ -18,7 +18,6 @@ class Model:
         self.model = model
         self.num_classes = 10
         self.batch_size = 0
-        self.costs = []
 
     def train(self, X, Y, learning_rate, batch_size=64, epochs=100):
         """
@@ -83,6 +82,12 @@ class Model:
             probabilities = probabilities.T
             loss = -np.sum(Y * np.log(probabilities + 1e-8))
             print(f'Loss epoch {epoch + 1}: {loss}')
+            
+            
+# class CategoricalCrossEntropy:
+#     def compute_loss(labels, predictions):
+#         predictions = predictions / np.sum(predictions, axis=0, keepdims=True)
+#         return -np.sum(labels * np.log(predictions))
 
             # Compute the accuracy.
             # np.argmax() returns the indices of the maximum values along an axis.
@@ -94,7 +99,6 @@ class Model:
 
             
             #############################################################
-            print(f'probabilities: {probabilities}')
             print(f'probabilities shape: {probabilities.shape}')
             print(f'Y_hat_temp shape: {Y_hat_temp.shape}')
             

@@ -63,8 +63,8 @@ class ConvolutionLayer:
         if 'W' not in self.params:
             W_shape = (filter_size, filter_size, n_C_prev, filters)
             b_shape = (1, 1, 1, filters)
-            self.params['W'] = utils.layer_init_uniform(W_shape)
-            self.params['b'] = utils.layer_init_uniform(b_shape)
+            self.params['W'] = utils.layer_uniform(W_shape)
+            self.params['b'] = utils.layer_uniform(b_shape)
 
         # Extract information from params dictionary.
         stride = self.params['stride']

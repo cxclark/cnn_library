@@ -75,7 +75,7 @@ class PoolLayer:
         
         return A
 
-    def create_mask_from_window(self, X):
+    def create_mask(self, X):
         """
         Creates a mask from an input matrix X, to identify the max entry of X. Used during backpropagation. 
         Arguments:
@@ -129,7 +129,7 @@ class PoolLayer:
                             a_prev_slice = a_prev[vert_start:vert_end, horiz_start:horiz_end, c]
 
                             # Create the mask from a_prev_slice.
-                            mask = self.create_mask_from_window(a_prev_slice)
+                            mask = self.create_mask(a_prev_slice)
 
                             # Set dA_prev to be dA_prev + (the mask multiplied by the correct entry of dA).
                             dA_prev[i, vert_start:vert_end, horiz_start:horiz_end, c] += np.multiply(mask, dA[i,h,w,c])
@@ -144,6 +144,5 @@ class PoolLayer:
         print(f'dA input shape in Pooling backward: {dA.shape}')
         print(f'dA_prev output shape in Pooling backward: {dA_prev.shape}')
 
-        
         
         return dA_prev
