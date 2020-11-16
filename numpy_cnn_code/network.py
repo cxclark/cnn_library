@@ -69,7 +69,7 @@ class Model:
                     print(f'mini_batch_preds final shape {mini_batch_preds.shape}')
 
                     # Compute the derivative.
-                    dA = mini_batch_true_labels.T - mini_batch_preds
+                    dA = mini_batch_preds - mini_batch_true_labels.T
                     
                     ### DEBUGGING ########################################################
                     print(f'dA.shape: {dA.shape}')
@@ -82,7 +82,7 @@ class Model:
             probabilities = self.predict(X)
             probabilities = probabilities.T
             loss = -np.sum(Y * np.log(probabilities + 1e-8))
-            print(f'Loss: {loss}')
+            print(f'Loss epoch {epoch + 1}: {loss}')
 
             # Compute the accuracy.
             # np.argmax() returns the indices of the maximum values along an axis.
@@ -90,13 +90,12 @@ class Model:
             Y_temp = np.argmax(Y, axis=1)            
             accuracy = (Y_hat_temp == Y_temp).mean()
             accuracy = round(accuracy * 100, 3)               
-            print(f'Accuracy: {accuracy}%')
+            print(f'Accuracy epoch {epoch + 1}: {accuracy}%')
+
             
             #############################################################
             print(f'probabilities: {probabilities}')
             print(f'probabilities shape: {probabilities.shape}')
-            print(f'Y_hat_temp: {Y_hat_temp}')
-            print(f'Y_temp: {Y_temp}')
             print(f'Y_hat_temp shape: {Y_hat_temp.shape}')
             
 
