@@ -11,15 +11,24 @@ class SoftmaxLayer:
 
     def forward(self, Z):
         self.cache['Z'] = Z        
+        
+        # The Softmax function is not stable, will get floating point limitation error in NumPy.
+        # Avoid the error by multiplying both the numerator and denominator with a constant.
+        # A popular choice −max(z).
+        
         expZ = np.exp(Z - np.max(Z))
-        return expZ / expZ.sum(axis=0, keepdims=True)
         
         ### DEBUGGING ########################################################
         print(f'Z input shape in Softmax forward prop: {Z.shape}')
-        print(f'out output shape in Softmax forward prop: {out.shape}')
         
-        return out
+        out = expZ / expZ.sum(axis=0)
 
+        ### DEBUGGING ########################################################
+        print(f'Z input shape in Softmax forward prop: {Z.shape}')
+        print(f'out output shape in Softmax forward prop: {out.shape}')
+
+        return out
+        
     def backward(self, dA, lr):
         Z = self.cache['Z']
         
