@@ -11,13 +11,19 @@ class Model:
     '''
     def __init__(self, *model, **kwargs):
         """
-        * (single asterisk) and ** (double asterisks) let you pass a variable number of arguments to a function.
+        * (single asterisk) and ** (double asterisks) lets you pass a variable number of arguments to function.
         *args is used to pass a non-keyworded variable-length argument list to your function. 
         **kwargs lets you pass a keyworded variable-length of arguments to your function
         """
         self.model = model
         self.num_classes = 10
         self.batch_size = 0
+        
+    def set_batch_size(self, batch_size):
+        """
+        Sets a batch size. This will be called while training the model.
+        """
+        self.batch_size = batch_size
 
     def train(self, X, Y, learning_rate, batch_size=64, epochs=100):
         """
@@ -30,9 +36,9 @@ class Model:
             epochs -- number of iterations through entire dataset to use in training, integer.
         Returns:
             None
-        """        
-        # Assign batch size given during training to model batch_size.
-        self.batch_size = batch_size
+        """      
+        # Call the set_batch_size function to set the .
+        self.set_batch_size(batch_size)
         
         # Normalize the input data.
         X = X / 255
@@ -94,29 +100,14 @@ class Model:
         # Normalize the input data.
         X = X / 255
         
-        # Extract the input data shapes.
-        m = X.shape[0]
+        # Copy input X and save to variable x_preds.
+        x_preds = X.copy()
         
-        # Initialize a numpy array for predictions of the correct shape.
-        predictions = np.zeros((self.num_classes, m))
-        
-        # Divide X into batches minus the end case.
-        num_complete_minibatches = m // self.batch_size
+        # Iterate through the model layers.
+        for layer in self.model:
+            x_preds = layer.forward(x_preds)
 
-        for k, mini_batch_X in enumerate(utils.get_x_batches(X, self.batch_size)):
-            
-            mini_batch_preds = mini_batch_X.copy()
-            
-            #Loop through the layers in the network.
-            for layer in self.model:
-                mini_batch_preds = layer.forward(mini_batch_preds)
-            
-            if k <= num_complete_minibatches - 1:
-                predictions[:, k*self.batch_size:(k+1)*self.batch_size] = mini_batch_preds
-            else:
-                predictions[:, k*self.batch_size: ] = mini_batch_preds
-
-        return predictions
+        return x_preds
 
     def evaluate(self, X, Y):
         """
@@ -130,14 +121,21 @@ class Model:
         # Normalize the image training data. 
         X = X / 255
         
-        # Calculate the vector prob
+        # Convert labels to binary vector representations of the correct class.
+        # Output shape will be (num_classes, m).
+        Y = utils.to_categorical(Y, self.num_classes)
+        
+        # Calculate the vector probabilities.
+        # Output shape should be (num_classes, m).
         probabilities = self.predict(X)
         
         ########################################################################
-        print(f'evaluate probabilities shape {probabilities.shape}')
+        print(f'Probabilities vector shape: {probabilities.shape}')
+        print(f'Y initial shape after to_categorical: {probabilities.shape}')
         
-        # The shape of probabilites after forward propagation is 
-        probabilities = probabilities.T
+        # Reshape probabilities from (num_classes, m) to (m, num_classes). 
+        probabilities = probabilities.T        
+        # Every probability vector should add up to 1.
         
         # Compute the accuracy.
         # np.argmax() returns the indices of the maximum values along an axis.
@@ -146,5 +144,10 @@ class Model:
         accuracy = (Y_hat == Y).mean()
         accuracy = round(accuracy * 100, 3)               
         print(f'Accuracy: {accuracy}%')  
+        
+        ########################################################################
+        print(f'Probabilities final vector shape: {probabilities.shape}')
+        print(f'Y_hat final shape (np.argmax(probs)): {Y_hat.shape}')
+        print(f'Y final shape (np.argmax(Y)): {Y.shape}')
         
         return
