@@ -87,7 +87,6 @@ def he_normal(shape):
     bias_shape = (fan_out, 1) if len(shape) == 2 else (1, 1, 1, shape[3])   
     return normal(shape, scale), uniform(bias_shape)
 
-
 def random_mini_batches(X, Y, mini_batch_size):
     """
     Creates a list of random minibatches from (X, Y)
@@ -111,9 +110,6 @@ def random_mini_batches(X, Y, mini_batch_size):
     shuffled_X = X[permutation, :, :, :]
     shuffled_Y = Y[permutation, :]
     
-    ## DEBUGGING #####################################################################
-    ### TOOK OUT .RESHAPE((1,m)) FROM DEEPLEARNING.AI, SHOULD PUT BACK IN?
-
     # Divide (shuffled_X, shuffled_Y) into batches minus the end case.
     num_complete_minibatches = m // mini_batch_size
 

@@ -1,5 +1,5 @@
 import numpy as np
-import utils as utils
+import hive_ml.utils as utils
 
 class ConvolutionLayer:
     def __init__(self, filters=3, filter_size=3, padding=1, stride=1):
@@ -23,6 +23,7 @@ class ConvolutionLayer:
         """
         # Extract the padding value from the parameter dictionary.
         pad = self.params['padding']
+        
         # Pad the images in dataset X.
         X_pad = np.pad(X, ((0,0), (pad, pad), (pad, pad), (0, 0)), mode='constant', constant_values=(0,0))
         return X_pad
@@ -116,15 +117,6 @@ class ConvolutionLayer:
         self.cache['A_prev'] = A_prev
         self.params['W'] = W
         self.params['b'] = b
-        
-                
-        ### DEBUGGING ########################################################
-        print(f'A_prev input shape in Convolution forward prop: {A_prev.shape}')
-        print(f'W weights input shape in Convolution forward prop: {W.shape}')
-        print(f'b biases input shape in Convolution forward prop: {b.shape}')
-        print(f'Z output shape in Convolution forward prop: {Z.shape}')
-        
-        
 
         return Z
 
@@ -208,15 +200,5 @@ class ConvolutionLayer:
         # Update the parameters.
         self.params['W'] = W - lr * dW
         self.params['b'] = b - lr * db
-
-        
-        
-        ### DEBUGGING ########################################################
-        print(f'dZ input shape in Convolution backward: {dZ.shape}')
-        print(f'dW grads shape in Convolution backward: {dW.shape}')
-        print(f'db grads shape in Convolution backward: {db.shape}')
-        print(f'dA_prev output shape in Convolution backward: {dA_prev.shape}')
-        
-        
         
         return dA_prev

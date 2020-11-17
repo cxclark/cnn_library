@@ -1,5 +1,5 @@
 import numpy as np
-import utils as utils
+import hive_ml.utils as utils
 
 class DenseLayer:
     """
@@ -27,11 +27,6 @@ class DenseLayer:
 
         # Save the input in the cache for backpropagation.
         self.cache['A'] = X
-
-        ### DEBUGGING
-        print(f'X input shape in Dense forward prop: {X.shape}')
-        print(f'W weights input shape in Dense forward prop: {W.shape}')
-        print(f'b biases input shape in Dense forward prop: {b.shape}')
         
         Z = np.dot(W, X) + b
 
@@ -56,8 +51,4 @@ class DenseLayer:
         
         out = np.dot(W.T, dZ)
         
-        ### DEBUGGING #####################################################
-        print(f'dZ input shape in Dense backward: {dZ.shape}')
-        print(f'out output shape in Dense backward: {out.shape}')
-
         return out
