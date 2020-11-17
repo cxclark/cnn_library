@@ -64,15 +64,7 @@ class PoolLayer:
 
         # Check that your output shape is correct.
         assert(A.shape == (m, n_H, n_W, n_C))
-        
-        
-        
-        ### DEBUGGING ########################################################
-        print(f'A_prev input shape in Pooling forward: {A_prev.shape}')
-        print(f'A output shape in Pooling forkward: {A.shape}')
-
-        
-        
+    
         return A
 
     def create_mask(self, X):
@@ -136,13 +128,5 @@ class PoolLayer:
 
         # Check that your output shape is correct.
         assert(dA_prev.shape == A_prev.shape)
-        
-        
-        
-        ### DEBUGGING ########################################################
-        print(f'A_prev cache input shape in Pooling backward: {A_prev.shape}')
-        print(f'dA input shape in Pooling backward: {dA.shape}')
-        print(f'dA_prev output shape in Pooling backward: {dA_prev.shape}')
 
-        
         return dA_prev

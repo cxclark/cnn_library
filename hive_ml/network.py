@@ -1,5 +1,5 @@
 import numpy as np
-import utils as utils
+import hive_ml.utils as utils
 
 class Model:
     '''
@@ -61,47 +61,27 @@ class Model:
                     #Loop through the layers in the network.
                     for layer in self.model:
                         mini_batch_preds = layer.forward(mini_batch_preds)
-                    
-                    ## DEBUGGING ########################################################
-                    print(f'mini_batch[0] shape {mini_batch[0].shape}')
-                    print(f'mini_batch_true_labels shape {mini_batch_true_labels.shape}')
-                    print(f'mini_batch_preds final shape {mini_batch_preds.shape}')
 
                     # Compute the derivative.
                     dA = mini_batch_preds - mini_batch_true_labels.T
-                    
-                    ### DEBUGGING ########################################################
-                    print(f'dA.shape: {dA.shape}')
                     
                     # Loop through the reversed layers in the network.
                     for layer in reversed(self.model):
                         dA = layer.backward(dA, learning_rate)
             
-            # Compute the loss after each epoch
+            # Compute the Categorical CrossEntropy loss after each epoch.
             probabilities = self.predict(X)
             probabilities = probabilities.T
             loss = -np.sum(Y * np.log(probabilities + 1e-8))
-            print(f'Loss epoch {epoch + 1}: {loss}')
-            
-            
-# class CategoricalCrossEntropy:
-#     def compute_loss(labels, predictions):
-#         predictions = predictions / np.sum(predictions, axis=0, keepdims=True)
-#         return -np.sum(labels * np.log(predictions))
-
+            print(f'Loss epoch {epoch + 1}: {round(loss, 3)}')
+                        
             # Compute the accuracy.
             # np.argmax() returns the indices of the maximum values along an axis.
             Y_hat_temp = np.argmax(probabilities, axis=1)
             Y_temp = np.argmax(Y, axis=1)            
             accuracy = (Y_hat_temp == Y_temp).mean()
             accuracy = round(accuracy * 100, 3)               
-            print(f'Accuracy epoch {epoch + 1}: {accuracy}%')
-
-            
-            #############################################################
-            print(f'probabilities shape: {probabilities.shape}')
-            print(f'Y_hat_temp shape: {Y_hat_temp.shape}')
-            
+            print(f'Accuracy epoch {epoch + 1}: {accuracy}%')            
 
     def predict(self, X):
         """
@@ -147,22 +127,24 @@ class Model:
         Returns:
             
         """
-        
+        # Normalize the image training data. 
         X = X / 255
         
-        predictions = self.predict(X)
+        # Calculate the vector prob
+        probabilities = self.predict(X)
         
-        predictions = predctions.T
+        ########################################################################
+        print(f'evaluate probabilities shape {probabilities.shape}')
         
+        # The shape of probabilites after forward propagation is 
+        probabilities = probabilities.T
         
-
-# def predict(self, X, Y):
-# 	A, cache = self.forward(X)
-# 	y_hat = np.argmax(A, axis=0)
-# 	Y = np.argmax(Y, axis=1)
-# 	accuracy = (y_hat == Y).mean()
-# 	return accuracy * 100
+        # Compute the accuracy.
+        # np.argmax() returns the indices of the maximum values along an axis.
+        Y_hat = np.argmax(probabilities, axis=1)
+        Y = np.argmax(Y, axis=1)            
+        accuracy = (Y_hat == Y).mean()
+        accuracy = round(accuracy * 100, 3)               
+        print(f'Accuracy: {accuracy}%')  
         
-#         predictions = self.predict(X)
-        
-#         return predictions, Y
+        return
