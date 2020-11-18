@@ -130,17 +130,17 @@ class ConvolutionLayer:
 
     def backward(self, dZ, lr):
         """
-        Implement the backward propagation for a convolution layer.
+        Implements the backward propagation for a convolution layer.
         Arguments:
-            dZ -- gradient of the cost with respect to the outout of conv layer (Z), 
-                  numpy array of shape (m, n_H, n_W, n_C)
+            dZ -- gradient of the cost with respect to the outout of conv layer (Z), numpy array of shape (m, n_H, n_W, n_C).
+            lr -- learning rate alpha, used in updating parameters.
         Returns:
             dA_prev -- gradient of the cost with respect to the input of the conv layer (A_prev),
-                       numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
+                       numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev).
             dW -- gradient of the cost with respect to the weights of conv layer (W),
-                  numpy array of shape (f, f, n_C_prev, n_C)
+                  numpy array of shape (f, f, n_C_prev, n_C).
             db -- gradient of the cost with respect to the biases of the conv layer (b), 
-                  numpy array of shape (1, 1, 1, n_C)
+                  numpy array of shape (1, 1, 1, n_C).
         """
         # Extract information from the cache.
         # A_prev was the previous activation layer when doing forward propagation.
@@ -174,10 +174,12 @@ class ConvolutionLayer:
 
         # Loop over the training examples.
         for i in range(m):
+            
             # Select the ith training example from A_prev_pad and dA_prev_pad.
             a_prev_pad = A_prev_pad[i]
             da_prev_pad = dA_prev_pad[i]
 
+            # The entire input volume needs to be covered in a convolution.
             # Loop over vertical axis of the output volume.
             for h in range(n_H):
                 # Loop over horizontal axis of the output volume.
@@ -185,7 +187,7 @@ class ConvolutionLayer:
                     # Loop over the channels of the output volume.
                     for c in range(n_C):
 
-                        # Find the corners of the current "slice"
+                        # Find the corners of the current "slice" using stride and filter size.
                         vert_start = h * stride
                         vert_end = vert_start + f
                         horiz_start = w * stride
