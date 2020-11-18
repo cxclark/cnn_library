@@ -25,7 +25,7 @@ class Model:
         """
         self.batch_size = batch_size
 
-    def train(self, X, Y, learning_rate, batch_size=64, epochs=100):
+    def train(self, X, Y, learning_rate, batch_size, epochs):
         """
         Trains the network.
         Arguments:
@@ -37,7 +37,7 @@ class Model:
         Returns:
             None
         """      
-        # Call the set_batch_size function to set the .
+        # Call the set_batch_size function and pass it the batch_size argument.
         self.set_batch_size(batch_size)
         
         # Normalize the input data.
@@ -130,13 +130,9 @@ class Model:
         # Output shape should be (num_classes, m).
         probabilities = self.predict(X)
         
-        ########################################################################
-        print(f'Probabilities vector shape: {probabilities.shape}')
-        print(f'Y initial shape after to_categorical: {probabilities.shape}')
-        
         # Reshape probabilities from (num_classes, m) to (m, num_classes). 
-        probabilities = probabilities.T        
-        # Every probability vector should add up to 1.
+        # The probability vector for every example should add up to 1.
+        probabilities = probabilities.T                
         
         # Compute the accuracy.
         # np.argmax() returns the indices of the maximum values along an axis.
@@ -145,10 +141,5 @@ class Model:
         accuracy = (Y_hat == Y).mean()
         accuracy = round(accuracy * 100, 3)               
         print(f'Accuracy: {accuracy}%')  
-        
-        ########################################################################
-        print(f'Probabilities final vector shape: {probabilities.shape}')
-        print(f'Y_hat final shape (np.argmax(probs)): {Y_hat.shape}')
-        print(f'Y final shape (np.argmax(Y)): {Y.shape}')
-        
+                
         return
