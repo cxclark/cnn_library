@@ -3,34 +3,53 @@
 ## Problem Statement
 What are the most critical components of building an image classifier using only Numpy?
 
-In order to answer this question, I will develop a python package--a collection of modules--that allows you to build convolutional neural networks to classify images. Model performance will be evaluated using accuracy.  Model performance will be compared to the performance of the model with the closest network architecture (e.g. LeNet, AlexNet, ResNet-50).
+The tools for developing neural networks are becoming increasingly streamlined and robust. This has the benefit of of making deep learning very accessible, but it abstracts away neural network processes and detail from the practitioner. Even with robust tools, training neural networks is still very challenging. A good understanding of how neural nets work and converge may lead to greater project success.
+
+This library implements an image classifier step-by-step using only NumPy. The task is to classify correctly images from the CIFAR-10 dataset. The goal of the build process is to gain intuitions and test concepts. Code comments and explanations are numerous. There will likely be mistakes, which should decrease over time. Feedback is welcome.
+
+This work is inspired by Andrej Karpathy's library ConvnetJS and Andrew Ng's deeplearning.ai courses, whose works and open-source materials have helped countless people break into AI.
 
 ## Executive Summary
-The four basic steps of a neural network are sampling a batch of labeled training data, forward propagating it through a network architecture and calculating the loss, backpropagating the gradient with respect to the loss through the network, and updating parameters based on the calculated gradients.
+The steps of optimizing a neural network include:
+1. Sample data
+2. Compute forward calculations and calculating loss
+3. Compute backward derivative calculations and flow gradient with respect to loss through network
+4. Update gradients
+5. Repeat
 
-Every forward calculation must have a corresponding backward--derivative--calculation during backpropagation. Outputs calculated during forward propagation must be stored in memory, the incrementally consumed during backpropagation steps. 
+Every forward calculation must have a corresponding backward--derivative--calculation during backpropagation. Outputs calculated during forward propagation must be stored in memory, then incrementally consumed during backpropagation steps.
 
-To achieve this structure, the network is designed as a series of layers. The layers are represented as classes. Within each class is a forward and backward function. A final model module stacks these layers together in the appropriate order. 
+To achieve this structure, the network is designed as a series of layers. In Python, the layers are represented as classes. Within each class is a forward and backward function. A final network class stacks these layers together for computation.
 
 In the simplest case, a convolutional neural network architecture is a list of layers that transform an image into an output volume holding the class scores.
 
 Layer Summary:  
-- InputLayer: holds raw pixel values of image
 - Convolutionlayer: computes output of neurons connected to local regions in the input, changes output size
     - Has parameters: weights and biases
-    - Has 4 hyperparameters: num_filters (K), filter_size (F), stride (S), zero-padding(P)
+    - Has hyperparameters: num_filters (K), filter_size (F), stride (S), zero-padding(P)
 - ReluLayer: applies element-wise activation function max(0, x), no change in output size
 - PoolingLayer: downsamples along width and height, changes output size
-    - Has 2 hyperparameters: filter_size (F), stride (S)
-- DenseLayer: computes class scores, resulting in volume [1 x 1 x 10], where each of 10 numbers correspond to CIFAR-10 class score.
+    - Has hyperparameters: filter_size (F), stride (S)
+- DenseLayer: computes class scores, where each of 10 numbers correspond to CIFAR-10 class score.
     - Has parameters: weights and biases
-    - Has hyperparameters: units
+    - Has hyperparameter: units
 
 ## Conclusions
+The core components of a convolutional neural network were successfully assembled and executed. Understanding the linear algebra and shape transformations between steps was critical to 
+
 
 ## Future Work
+Roadmap for the library:
+1. Debug issues with scaling to large datasets, specifically troubleshooting loss errors
+1. Publish to PyPi
+1. Modularize parameter update methods
+1. Modularize loss and accuracy 
+1. Build out data preprocessing methods
+1. Regularization layers
+1. Batch normalization layers
 
-## Resources and Inspiration:
+
+## References:
 - [Stanford CS231n: Convolutional Neural Networks for Visual Recognition](https://cs231n.github.io/convolutional-networks/)
 - [Deeplearning.ai: Deep Learning Specialization](https://www.deeplearning.ai/deep-learning-specialization/)
 - [ConvNetJS: Andrej Karpathy's Javascript Deep Learning framework](https://cs.stanford.edu/people/karpathy/convnetjs/)
