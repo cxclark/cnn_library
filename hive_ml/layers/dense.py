@@ -3,7 +3,7 @@ import hive_ml.utils as utils
 
 class DenseLayer:
     """
-    Fully connected dot products. 
+    Computes dot products of dense or fully-connected layers.
     """
     def __init__(self, units=10):
         self.units = units
@@ -16,6 +16,8 @@ class DenseLayer:
         Implements forward propagation of dense layer.
         Arguments:
             X -- input data, of shape (64, 768)
+        Returns:
+            Z -- output scores to be passed to an activation function.
         """
 
         # Initialize a parameter matrix if it does not exist. 
