@@ -1,6 +1,7 @@
 import numpy as np
 import pickle
 
+# List of classes in CIFAR-10.
 cifar_classes = [
     'airplane', 
     'automobile', 
