@@ -32,7 +32,9 @@ This library currently support these layers:
 ## Conclusions
 The core components of a convolutional neural network were successfully assembled and executed. In the simplest sense, a convolutional neural network architecture is a list of layers that transform an image into an output volume holding the class scores. This was accomplished, as output probability vectors were produced.
 
-Understanding the linear algebra and shape transformations between steps was critical to gettng the layers to work together.
+Understanding the linear algebra and shape transformations between steps was critical to gettng the layers to work together. 
+
+In addition, the loss when kicking off classifier training using softmax should be $$-log\frac{1}{num_classes}$$, or ~2.3. This was achieved in the first epoch, which is a good sign.
 
 However, the model was not able to optimize and converge. While working with small subsets of the data produce results, errors emerged when training on larger subsets of the data. This could be due to an error in the mathematical formulas used, suboptimal weight initializations, or something else.
 
