@@ -4,12 +4,12 @@ import time
 
 class Model:
     '''
-    Network manages a set of layers. 
+    Manages a set of layers. 
     Parameters:
         num_classes -- number of classes, integer.
         batch_size -- size of mini-batches, integer.
-        
     '''
+    
     def __init__(self, *model, **kwargs):
         """
         * (single asterisk) and ** (double asterisks) lets you pass a variable number of arguments to function.
