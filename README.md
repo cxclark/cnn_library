@@ -21,16 +21,13 @@ Every forward calculation must have a corresponding backward--derivative--calcul
 
 To achieve this structure, the network is designed as a series of layers. In Python, the layers are represented as classes. Within each class is a forward and backward function. A final network class stacks these layers together for computation.
 
-Layer Summary:  
-- Convolutionlayer: computes output of neurons connected to local regions in the input, changes output size
-    - Has parameters: weights and biases
-    - Has hyperparameters: num_filters (K), filter_size (F), stride (S), zero-padding(P)
-- ReluLayer: applies element-wise activation function max(0, x), no change in output size
-- PoolingLayer: downsamples along width and height, changes output size
-    - Has hyperparameters: filter_size (F), stride (S)
-- DenseLayer: computes class scores, where each of 10 numbers correspond to CIFAR-10 class score.
-    - Has parameters: weights and biases
-    - Has hyperparameter: units
+This library currently support these layers:
+- Convolutions
+- ReLU
+- Max Pooling
+- Flatten
+- Dense or Fully-Connected
+- Softmax
 
 ## Conclusions
 The core components of a convolutional neural network were successfully assembled and executed. In the simplest sense, a convolutional neural network architecture is a list of layers that transform an image into an output volume holding the class scores. This was accomplished, as output probability vectors were produced.
@@ -48,6 +45,8 @@ Roadmap for the library:
 1. Build out data preprocessing methods
 1. Regularization layers
 1. Batch normalization layers
+1. Input layers to handle different image types
+1. Generalize to other classification tasks
 
 ## References:
 - [Stanford CS231n: Convolutional Neural Networks for Visual Recognition](https://cs231n.github.io/convolutional-networks/)
