@@ -16,8 +16,8 @@ class DenseLayer:
         Implements forward propagation of dense layer.
         Arguments:
             X -- input data, numpy array of shape (flattened_neurons, batch_size).
-            W -- weights, numpy array of shape (num_classes, flattened_neurons). Pulled from self.params.
-            b -- biases, numpy array of shape (num_classes, 1). Pulled from self.params.
+            W -- weights, numpy array of shape (num_classes, flattened_neurons). Extracted from self.params.
+            b -- biases, numpy array of shape (num_classes, 1). Extracted from self.params.
         Returns:
             Z -- output scores to be passed to an activation function, numpy array of shape (num_classes, batch_size).
         """
