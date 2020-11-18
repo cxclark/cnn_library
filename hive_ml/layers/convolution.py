@@ -52,8 +52,8 @@ class ConvolutionLayer:
         Implements forward propagation for a convolution layer.
         Arguments:
             A_prev -- output activations of previous layer, numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev).
-            W -- weights, numpy array of shape (f, f, n_C_prev, n_C). Needed for calculation but pulled from self.params.
-            b -- biases, numpy array of shape (1, 1, 1, n_C). Needed for calculation but pulled from self.params.
+            W -- weights, numpy array of shape (f, f, n_C_prev, n_C). Extracted from self.params.
+            b -- biases, numpy array of shape (1, 1, 1, n_C). Extracted from self.params.
         Returns:
             Z -- convolution output of Z scores, numpy array of shape (m, n_H, n_W, n_C).
         """
