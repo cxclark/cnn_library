@@ -79,7 +79,8 @@ class Model:
             probabilities = self.predict(X)
             probabilities = probabilities.T
             loss = -np.sum(Y * np.log(probabilities + 1e-8))
-            print(f'Loss epoch {epoch + 1}: {round(loss, 3)}')
+            m = X.shape[0]
+            print(f'Loss epoch {epoch + 1}: {round(loss / m, 3)}')
                         
             # Compute the accuracy.
             # np.argmax() returns the indices of the maximum values along an axis.
