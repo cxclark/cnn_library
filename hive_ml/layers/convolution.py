@@ -3,7 +3,7 @@ import hive_ml.utils as utils
 
 class ConvolutionLayer:
     """
-    Implement convolution dot products.
+    Implements convolution dot products.
     """
     
     def __init__(self, filters=3, filter_size=3, padding=1, stride=1):
@@ -18,7 +18,7 @@ class ConvolutionLayer:
 
     def zero_pad(self, X, pad):
         """
-        Pad all images in dataset X with zeros along height and width.
+        Pads all images in dataset X with zeros along height and width.
         Arguments:
             X -- python numpy array of shape (m, n_H, n_W, n_C) representing a batch of m images.
             pad -- zero-padding size to append to height and width.
@@ -34,11 +34,11 @@ class ConvolutionLayer:
 
     def conv_single_step(self, a_slice_prev, W, b):
         """
-        Apply one filter on a single slice of the output activation of the previous layer.
+        Applies one filter on a single slice of the output activation of the previous layer.
         Arguments:
-            a_slice_prev -- slice of input data of shape (f, f, n_C_prev)
-            W -- weight parameters contained in a window, matrix of shape (f, f, n_C_prev)
-            b -- bias parameters contained in a window, matrix of shape (1, 1, 1)
+            a_slice_prev -- slice of input data of shape (f, f, n_C_prev).
+            W -- weight parameters contained in a window, matrix of shape (f, f, n_C_prev).
+            b -- bias parameters contained in a window, matrix of shape (1, 1, 1).
         Returns:
             Z -- a scaler value, result of convolving sliding window (W, b) on slice of input data.
         """
@@ -49,13 +49,13 @@ class ConvolutionLayer:
 
     def forward(self, A_prev):
         """
-        Implement forward propagation for a convolution layer.
-        W -- weights, numpy array of shape (f, f, n_C_prev, n_C)
-        b -- biases, numpy array of shape (1, 1, 1, n_C)
+        Implements forward propagation for a convolution layer.
+        W - weights, numpy array of shape (f, f, n_C_prev, n_C). Needed for calculation but pulled from params.
+        b - biases, numpy array of shape (1, 1, 1, n_C). Needed for calculation but pulled from params.
         Arguments:
-            A_prev -- output activations of previous layer, numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
+            A_prev -- output activations of previous layer, numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev).
         Returns:
-            Z -- convolution output, numpy array of shape (m, n_H, n_W, n_C)
+            Z -- convolution output, numpy array of shape (m, n_H, n_W, n_C).
         """
         # Extract dimensions from A_prev's shape.
         m, n_H_prev, n_W_prev, n_C_prev = A_prev.shape
