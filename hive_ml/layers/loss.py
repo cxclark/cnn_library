@@ -14,9 +14,10 @@ class SoftmaxLayer:
         
         # The Softmax function is not stable, will get floating point limitation error in NumPy.
         # Prone to overflow and underflow.
-        # Overflow: when very large numbers are approximated as infinity
-        # Underflow: when very small numbers are approximated as zero
+        # Overflow: when very large numbers are approximated as infinity.
+        # Underflow: when very small numbers are approximated as zero.
         # To combat, common to shift input vector by subtracting the max element from all elements. 
+        # This makes the highest value of the vector 0.
         Z = Z - np.max(Z)
         expZ = np.exp(Z)
         
