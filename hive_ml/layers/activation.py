@@ -19,6 +19,8 @@ class ReluLayer:
         
         # Apply the relu activation to the input.
         return np.where(Z < 0, 0, Z)
+    
+    
 
     def backward(self, dA, lr):
         """
