@@ -87,12 +87,12 @@ class Model:
             # Instantiate an end time variable.
             end = time.time()
             # Print the time in seconds for 1 epoch.
-            print(f'Time to train on {X.shape[0]} examples: {round(end - start, 2)} seconds.')
+            print(f'Time to train {X.shape[0]} examples: {round((end - start) / 60, 2)} min.')
             
             # Compute the Categorical CrossEntropy loss after each epoch.
             probabilities = self.predict(X)
             probabilities = probabilities.T
-            loss = -np.sum(Y * np.log(probabilities + 1e-8))
+            loss = -np.sum(Y * np.log(probabilities + 1e-7))
             # Extract the number of examples in the input data.
             m = X.shape[0]
             # Print the loss normalized over the training examples.

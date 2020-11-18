@@ -34,7 +34,7 @@ class ConvolutionLayer:
 
     def conv_single_step(self, a_slice_prev, W, b):
         """
-        Applies one filter on a single slice of the output activation of the previous layer.
+        Convolves one filter on a single slice of the output activation of the previous layer.
         Arguments:
             a_slice_prev -- slice of input data of shape (f, f, n_C_prev).
             W -- weight parameters contained in a window, matrix of shape (f, f, n_C_prev).
