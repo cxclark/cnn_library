@@ -36,7 +36,7 @@ Understanding the linear algebra and shape transformations between steps was cri
 
 In addition, the loss when kicking off classifier training using softmax should be log(1/num_classes), or ~2.3 in the case of CIFAR-10. This was achieved in the first epoch, which is a good sign.
 
-However, the model was not able to optimize and converge. While working with small subsets of the data produce results, errors emerged when training on larger subsets of the data. This could be due to an error in the mathematical formulas used, suboptimal weight initializations, or something else.
+However, the model was not able to optimize and converge. While working with small subsets of the data produced promising results, errors emerged when training on larger subsets of the data. This could be due to an error in the mathematical formulas used, suboptimal weight initializations, or something else.
 
 ## Future Work
 Roadmap for the library:
