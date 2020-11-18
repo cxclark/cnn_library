@@ -12,7 +12,7 @@ This work is inspired by Andrej Karpathy's library ConvnetJS and Andrew Ng's dee
 ## Executive Summary
 Steps of optimizing a neural network:
 1. Sample data
-2. Compute forward calculations and calculating loss
+2. Compute forward calculations and calculate loss
 3. Compute backward derivative calculations
 4. Update parameters based on local gradients
 5. Repeat
