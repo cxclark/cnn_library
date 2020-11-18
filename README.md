@@ -34,7 +34,7 @@ The core components of a convolutional neural network were successfully assemble
 
 Understanding the linear algebra and shape transformations between steps was critical to gettng the layers to work together.
 
-However, the model was not able to optimize and converge. While working with small subsets of the data produce results, errors emerged when training on larger subsets of the data. This could be due to an error in the mathematical formulas used, or suboptimal weight initializations.
+However, the model was not able to optimize and converge. While working with small subsets of the data produce results, errors emerged when training on larger subsets of the data. This could be due to an error in the mathematical formulas used, suboptimal weight initializations, or something else.
 
 ## Future Work
 Roadmap for the library:
