@@ -2,6 +2,10 @@ import numpy as np
 import hive_ml.utils as utils
 
 class ConvolutionLayer:
+    """
+    Implement convolution dot products.
+    """
+    
     def __init__(self, filters=3, filter_size=3, padding=1, stride=1):
         self.params = {
                 'filters': filters,
@@ -45,7 +49,7 @@ class ConvolutionLayer:
 
     def forward(self, A_prev):
         """
-        Implements forward propagation for a convolution layer.
+        Implement forward propagation for a convolution layer.
         W -- weights, numpy array of shape (f, f, n_C_prev, n_C)
         b -- biases, numpy array of shape (1, 1, 1, n_C)
         Arguments:
@@ -60,7 +64,7 @@ class ConvolutionLayer:
         filter_size = self.params['filter_size']
         filters = self.params['filters']
         
-        # Initialize a parameter matrix if it does not exist. 
+        # Initialize parameter tensors if they are not in the params dictionary. 
         if 'W' not in self.params:
             W_shape = (filter_size, filter_size, n_C_prev, filters)
             b_shape = (1, 1, 1, filters)
@@ -80,7 +84,8 @@ class ConvolutionLayer:
         n_H = int((n_H_prev - f + 2*padding) / stride) + 1
         n_W = int((n_W_prev - f + 2*padding) / stride) + 1 
 
-        # Initialize the output volume Z with zeros.
+        # Initialize a placeholder output volume Z.
+        # These will not be multiplied by anything so can initialize with zeros.
         Z = np.zeros([m, n_H, n_W, n_C])
 
         # Pad the input volume to the convolution.
@@ -88,8 +93,11 @@ class ConvolutionLayer:
 
         # Loop over the training examples.
         for i in range(m):
+            
             # Select the ith training example's padded activation.
             a_prev_pad = A_prev_pad[i, :, :, :]
+            
+            # The entire input volume needs to be covered in a convolution.
             # Loop over the vertical axis of the output volume.
             for h in range(n_H):
                 # Loop over the horizontal axis of the output volume.
@@ -97,7 +105,7 @@ class ConvolutionLayer:
                     # Loop over the channels of the output volume.
                     for c in range(n_C):
 
-                        # Find the corners of the current "slice"
+                        # Find the corners of the current "slice" using stride and filter size.
                         vert_start = h * stride
                         vert_end = vert_start + f
                         horiz_start = w * stride
