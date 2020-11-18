@@ -1,5 +1,6 @@
 import numpy as np
 import hive_ml.utils as utils
+import time
 
 class Model:
     '''
@@ -50,17 +51,25 @@ class Model:
         assert(Y.shape == (Y.shape[0], self.num_classes))
                 
         # Shuffle X and Y into random mini batches.
+        # Returns a list of synchronous X-Y batches of size batch_size.
         mini_batches = utils.random_mini_batches(X, Y, batch_size)
         
         # Loop through the epochs.
+        # In 1 epoch, the model will see every training example.
         for epoch in range(epochs):
+            
+            # Add 1 to epoch count because index starts at 0.
             print('Running epoch:', epoch + 1)
+            
+            # Instantiate start time variable.
+            start = time.time()
             
             # Loop through the mini-batches.
             for mini_batch in mini_batches:
                     
                     # Extract mini_batch_X and save it as the input.
                     mini_batch_preds = mini_batch[0]
+                    
                     # Extract mini_batch_X true labels.
                     mini_batch_true_labels = mini_batch[1]
                     
@@ -75,11 +84,18 @@ class Model:
                     for layer in reversed(self.model):
                         dA = layer.backward(dA, learning_rate)
             
+            # Instantiate an end time variable.
+            end = time.time()
+            # Print the time in seconds for 1 epoch.
+            print(f'Time to train on {X.shape[0]} examples: {round(end - start, 2)} seconds.')
+            
             # Compute the Categorical CrossEntropy loss after each epoch.
             probabilities = self.predict(X)
             probabilities = probabilities.T
             loss = -np.sum(Y * np.log(probabilities + 1e-8))
+            # Extract the number of examples in the input data.
             m = X.shape[0]
+            # Print the loss normalized over the training examples.
             print(f'Loss epoch {epoch + 1}: {round(loss / m, 3)}')
                         
             # Compute the accuracy.
