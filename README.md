@@ -1,7 +1,7 @@
 # Building a Convolutional Neural Network Using Only Numpy
 
 ## Problem Statement
-What are the most critical components of building an image classifier using only Numpy?
+What are the most critical components of building an image classifier using only NumPy?
 
 The tools for developing neural networks are becoming increasingly streamlined and robust. This has the benefit of of making deep learning very accessible, but it abstracts away neural network processes and detail from the practitioner. Even with robust tools, training neural networks is still very challenging. A good understanding of how neural nets work and converge may lead to greater project success.
 
